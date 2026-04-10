@@ -1,5 +1,3 @@
-<body>
-
 <?= view('layout/header') ?>
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>

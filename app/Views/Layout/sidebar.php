@@ -88,6 +88,13 @@
                     </a>
                 </li>
 
+                <li class="pc-item <?= uri_string() == 'suplai' ? 'active' : '' ?>">
+                    <a href="/suplai" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-truck"></i></span>
+                        <span class="pc-mtext">Data Suplai</span>
+                    </a>
+                </li>
+
                 <li class="pc-item pc-caption">
                     <label>Akun</label>
                 </li>

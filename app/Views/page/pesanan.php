@@ -118,14 +118,15 @@
                                 <th><i class="bi bi-box-seam me-1"></i>Produk</th>
                                 <th><i class="bi bi-cash me-1"></i>Nominal</th>
                                 <th><i class="bi bi-calendar3 me-1"></i>Tanggal</th>
+                                <th><i class="bi bi-check2-circle me-1"></i>Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($pesanan)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center py-5">
+                                    <td colspan="6" class="text-center py-5">
                                         <i class="bi bi-inbox" style="font-size:64px;opacity:.2"></i>
-                                        <p class="mt-3 text-muted">Tidak ada pesanan ditemukan</p>
+                                        <p class="mt-3 text-muted">pesanan ditemukan</p>
                                     </td>
                                 </tr>
                             <?php else: ?>
@@ -142,6 +143,7 @@
                                     <td><?= esc($p['produk']) ?></td>
                                     <td class="fw-semibold text-success">Rp <?= number_format($p['nominal'], 0, ',', '.') ?></td>
                                     <td class="text-muted"><?= esc($p['tanggal']) ?></td>
+                                    <td class="text-center"><?= esc($p['jumlah']) ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
