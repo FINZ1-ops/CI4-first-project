@@ -14,3 +14,4 @@ $routes->get('/produk', 'Produk::index');
 $routes->get('/pesanan', 'Pesanan::index');
 $routes->get('/penjualan', 'Penjualan::index');
 $routes->get('/suplai', 'Suplai::index');
+$routes->get('/profile', 'Profile::index');

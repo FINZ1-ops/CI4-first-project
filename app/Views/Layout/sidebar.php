@@ -47,7 +47,7 @@
 
                 <li class="pc-item <?= (uri_string() == '' || uri_string() == 'dashboard') ? 'active' : '' ?>">
                     <a href="/dashboard" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                        <span class="pc-micon"><i class="bi bi-speedometer2"></i></span>
                         <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
@@ -58,21 +58,21 @@
 
                 <li class="pc-item <?= uri_string() == 'pengguna' ? 'active' : '' ?>">
                     <a href="/pengguna" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-users"></i></span>
+                        <span class="pc-micon"><i class="bi bi-people-fill"></i></span>
                         <span class="pc-mtext">Data Pengguna</span>
                     </a>
                 </li>
 
                 <li class="pc-item <?= uri_string() == 'produk' ? 'active' : '' ?>">
                     <a href="/produk" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-box"></i></span>
+                        <span class="pc-micon"><i class="bi bi-box2-fill"></i></span>
                         <span class="pc-mtext">Data Produk</span>
                     </a>
                 </li>
 
                 <li class="pc-item <?= uri_string() == 'pesanan' ? 'active' : '' ?>">
                     <a href="/pesanan" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
+                        <span class="pc-micon"><i class="bi bi-basket2-fill"></i></span>
                         <span class="pc-mtext">Data Pesanan</span>
                     </a>
                 </li>
@@ -83,14 +83,14 @@
 
                 <li class="pc-item <?= uri_string() == 'penjualan' ? 'active' : '' ?>">
                     <a href="/penjualan" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-chart-bar"></i></span>
+                        <span class="pc-micon"><i class="bi bi-graph-up-arrow"></i></span>
                         <span class="pc-mtext">Laporan Penjualan</span>
                     </a>
                 </li>
 
                 <li class="pc-item <?= uri_string() == 'suplai' ? 'active' : '' ?>">
                     <a href="/suplai" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-truck"></i></span>
+                        <span class="pc-micon"><i class="bi bi-truck"></i></span>
                         <span class="pc-mtext">Data Suplai</span>
                     </a>
                 </li>
@@ -101,14 +101,14 @@
 
                 <li class="pc-item">
                     <button class="pc-link" id="app-settings-button" type="button">
-                        <span class="pc-micon"><i class="ti ti-settings"></i></span>
+                        <span class="pc-micon"><i class="bi bi-gear"></i></span>
                         <span class="pc-mtext">Pengaturan</span>
                     </button>
                 </li>
 
                 <li class="pc-item">
                     <a href="#" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-logout"></i></span>
+                        <span class="pc-micon"><i class="bi bi-box-arrow-right"></i></span>
                         <span class="pc-mtext">Logout</span>
                     </a>
                 </li>
@@ -170,3 +170,4 @@
         </div>
     </div>
 </nav>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>

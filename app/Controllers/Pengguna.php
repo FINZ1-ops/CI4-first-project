@@ -18,6 +18,9 @@ class Pengguna extends BaseController
             ['name' => 'Eka',   'email' => 'eka@example.com'],
             ['name' => 'Fajar', 'email' => 'fajar@example.com'],
             ['name' => 'Gita',  'email' => 'gita@example.com'],
+            ['name' => 'Hadi',  'email' => 'hadi@example.com'],
+            ['name' => 'Intan', 'email' => 'intan@example.com'],
+            ['name' => 'Joko',  'email' => 'joko@example.com']
        ];
 
        if ($search){

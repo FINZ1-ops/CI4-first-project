@@ -108,15 +108,65 @@
         applyVars(load());
     }
 
-    // Toggle sidebar
+    // Toggle sidebar — desktop: collapsed, mobile: open
     document.addEventListener('DOMContentLoaded', function() {
         const sidebarBtn = document.getElementById('sidebar-hide');
+        const overlay    = document.getElementById('sidebar-overlay');
+
+        function isMobile() { return window.innerWidth <= 768; }
+
+        function closeSidebar() {
+            if (isMobile()) {
+                document.body.classList.remove('sidebar-open');
+            } else {
+                document.body.classList.add('sidebar-collapsed');
+            }
+        }
+
+        function openSidebar() {
+            if (isMobile()) {
+                document.body.classList.add('sidebar-open');
+            } else {
+                document.body.classList.remove('sidebar-collapsed');
+            }
+        }
+
         if (sidebarBtn) {
             sidebarBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.body.classList.toggle('sidebar-collapsed');
+                if (isMobile()) {
+                    document.body.classList.toggle('sidebar-open');
+                } else {
+                    document.body.classList.toggle('sidebar-collapsed');
+                }
             });
         }
+
+        // Tutup sidebar saat klik overlay
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                document.body.classList.remove('sidebar-open');
+            });
+        }
+
+        // Tutup sidebar saat klik menu di mobile
+        document.querySelectorAll('.pc-navbar .pc-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (isMobile()) {
+                    document.body.classList.remove('sidebar-open');
+                }
+            });
+        });
+
+        // Reset class saat resize
+        window.addEventListener('resize', function() {
+            if (!isMobile()) {
+                document.body.classList.remove('sidebar-open');
+            } else {
+                document.body.classList.remove('sidebar-collapsed');
+            }
+        });
+
         initSettings();
     });
 })();

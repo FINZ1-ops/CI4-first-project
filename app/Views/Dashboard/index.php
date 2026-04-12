@@ -7,20 +7,18 @@
     <div class="pc-content">
 
         <!-- Page Header -->
-        <div class="page-header mb-4">
+        <div class="mb-4 pb-2">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h4 class="mb-1 fw-bold">Dashboard</h4>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <h4 class="mb-2 fw-bold text-dark"><i class="bi bi-speedometer2"></i> Dashboard</h4>
+                    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '→';">
+                        <ol class="breadcrumb breadcrumb-dots small mb-0">
+                            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </nav>
                 </div>
-                <div class="text-end">
-                    <span class="badge bg-light text-dark fs-6"><?= date('l, d F Y') ?></span>
-                </div>
+                <span class="text-muted small"><i class="bi bi-calendar3-week"></i> <?= date('d M Y') ?></span>
             </div>
         </div>
 
@@ -35,13 +33,13 @@
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_user) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
-                                <i class="ti ti-users"></i>
+                                <i class="bi bi-people-fill"></i>
                             </div>
                         </div>
-                        <small class="mt-2 d-block opacity-75"><i class="ti ti-trending-up"></i> +12% dari minggu lalu</small>
+                        <small class="mt-2 d-block opacity-75"><i class="bi bi-graph-up"></i> +12% dari minggu lalu</small>
                     </div>
                     <div class="position-absolute bottom-0 end-0 opacity-10" style="font-size: 80px; margin: -20px -20px 0 0;">
-                        <i class="ti ti-users"></i>
+                        <i class="bi bi-people-fill"></i>
                     </div>
                 </div>
             </div>
@@ -54,13 +52,13 @@
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_order) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
-                                <i class="ti ti-shopping-cart"></i>
+                                <i class="bi bi-basket2-fill"></i>
                             </div>
                         </div>
-                        <small class="mt-2 d-block opacity-75"><i class="ti ti-trending-up"></i> +8% dari minggu lalu</small>
+                        <small class="mt-2 d-block opacity-75"><i class="bi bi-graph-up"></i> +8% dari minggu lalu</small>
                     </div>
                     <div class="position-absolute bottom-0 end-0 opacity-10" style="font-size: 80px; margin: -20px -20px 0 0;">
-                        <i class="ti ti-shopping-cart"></i>
+                        <i class="bi bi-basket2-fill"></i>
                     </div>
                 </div>
             </div>
@@ -73,13 +71,13 @@
                                 <div class="stat-value fw-bold" style="font-size: 24px;"><?= $total_income ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
-                                <i class="ti ti-cash"></i>
+                                <i class="bi bi-cash-coin"></i>
                             </div>
                         </div>
-                        <small class="mt-2 d-block opacity-75"><i class="ti ti-trending-up"></i> +24% dari minggu lalu</small>
+                        <small class="mt-2 d-block opacity-75"><i class="bi bi-graph-up"></i> +24% dari minggu lalu</small>
                     </div>
                     <div class="position-absolute bottom-0 end-0 opacity-10" style="font-size: 80px; margin: -20px -20px 0 0;">
-                        <i class="ti ti-cash"></i>
+                        <i class="bi bi-cash-coin"></i>
                     </div>
                 </div>
             </div>
@@ -92,13 +90,13 @@
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_produk) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
-                                <i class="ti ti-box"></i>
+                                <i class="bi bi-box2-fill"></i>
                             </div>
                         </div>
-                        <small class="mt-2 d-block opacity-75"><i class="ti ti-trending-down"></i> -3% dari minggu lalu</small>
+                        <small class="mt-2 d-block opacity-75"><i class="bi bi-graph-down"></i> -3% dari minggu lalu</small>
                     </div>
                     <div class="position-absolute bottom-0 end-0 opacity-10" style="font-size: 80px; margin: -20px -20px 0 0;">
-                        <i class="ti ti-box"></i>
+                        <i class="bi bi-box2-fill"></i>
                     </div>
                 </div>
             </div>
@@ -108,7 +106,7 @@
         <div class="row g-3 mb-4">
             <div class="col-xl-8">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between">
+                    <div class="card-header background: var(--surface) border-bottom py-3 d-flex align-items-center justify-content-between">
                         <h6 class="mb-0 fw-semibold">📊 Grafik Penjualan</h6>
                         <div class="btn-group btn-group-sm" id="periodeBtns">
                             <button class="btn btn-outline-primary active" onclick="gantiPeriode('minggu', this)">Minggu</button>
@@ -123,7 +121,7 @@
             </div>
             <div class="col-xl-4">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-bottom py-3">
+                    <div class="card-header background: var(--surface) border-bottom py-3">
                         <h6 class="mb-0 fw-semibold">📦 Status Pesanan</h6>
                     </div>
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
@@ -160,9 +158,9 @@
         <div class="row g-3">
             <div class="col-xl-8">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between">
+                    <div class="card-header background: var(--surface) border-bottom py-3 d-flex align-items-center justify-content-between">
                         <h6 class="mb-0 fw-semibold">🛒 Pesanan Terbaru</h6>
-                        <a href="/pesanan" class="btn btn-sm btn-primary"><i class="ti ti-eye me-1"></i> Lihat Semua</a>
+                        <a href="/pesanan" class="btn btn-sm btn-primary"><i class="bi bi-eye me-1"></i> Lihat Semua</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -247,7 +245,7 @@
             <!-- Top Products -->
             <div class="col-xl-4">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-bottom py-3">
+                    <div class="card-header background: var(--surface) border-bottom py-3">
                         <h6 class="mb-0 fw-semibold">⭐ Produk Terlaris</h6>
                     </div>
                     <div class="card-body">
@@ -305,11 +303,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Toggle Sidebar
-    document.getElementById('sidebar-hide').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.body.classList.toggle('sidebar-collapsed');
-    });
 
     // Fungsi format nominal
     function formatNominal(nominal) {
@@ -431,4 +424,3 @@
 </script>
 
 <?= view('layout/footer') ?>
-</body>

@@ -6,7 +6,7 @@
     <title><?= $title ?? 'Dashboard' ?> | NiceWeb</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script>
@@ -75,6 +75,21 @@
         }
 
         a { color: inherit; text-decoration: none; }
+
+        .pc-header ul.list-unstyled { 
+            flex-wrap: nowrap; 
+            overflow: visible;
+        }
+        
+        .pc-header .pc-h-item {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .user-avtar {
+            display: block;
+            flex-shrink: 0;
+        }  
 
         .pc-sidebar {
             position: fixed; top: 0; left: 0; bottom: 0;
@@ -147,6 +162,7 @@
 
         .pc-head-link:hover { background: var(--hover-soft); color: var(--accent); }
         .pc-h-badge { position: absolute; top: 0; right: 0; font-size: 9px; padding: 2px 5px; }
+        .pc-h-item { position: relative; }
         .dropdown-notification { width: 320px; }
         .dropdown-user-profile { width: 220px; }
         .dropdown-menu { background: var(--surface); border-color: var(--border); }
@@ -213,15 +229,48 @@
             background: var(--accent); border-color: var(--accent); color: #fff;
         }
 
+        /* ===== DESKTOP COLLAPSED ===== */
         body.sidebar-collapsed .pc-sidebar { left: calc(-1 * var(--sidebar-width)); }
         body.sidebar-collapsed .pc-header { left: 0; }
         body.sidebar-collapsed .pc-container { margin-left: 0; }
 
+        /* ===== MOBILE OVERLAY ===== */
+        .sidebar-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(15,23,42,.45);
+            z-index: 1025;
+            backdrop-filter: blur(2px);
+        }
+
         @media (max-width: 768px) {
-            .pc-sidebar { left: calc(-1 * var(--sidebar-width)); }
-            .pc-header { left: 0; }
-            .pc-container { margin-left: 0; }
-            body.sidebar-open .pc-sidebar { left: 0; }
+            /* Sidebar tersembunyi default di mobile */
+            .pc-sidebar {
+                left: calc(-1 * var(--sidebar-width));
+                box-shadow: none;
+            }
+            .pc-header { left: 0 !important; }
+            .pc-container { margin-left: 0 !important; }
+
+            /* Sidebar muncul saat sidebar-open */
+            body.sidebar-open .pc-sidebar {
+                left: 0;
+                box-shadow: 8px 0 24px rgba(0,0,0,0.15);
+            }
+            body.sidebar-open .sidebar-overlay { display: block; }
+
+            /* Perkecil padding konten di mobile */
+            .pc-content { padding: 16px; }
+
+            /* Tabel scroll horizontal */
+            .table-responsive { -webkit-overflow-scrolling: touch; }
+
+            /* Card full width di mobile */
+            .stat-icon { width: 40px; height: 40px; font-size: 20px; }
+            .stat-value { font-size: 20px; }
+
+            /* Dropdown notification full width */
+            .dropdown-notification { width: calc(100vw - 32px); }
         }
 
         .settings-panel { position: fixed; inset: 0; z-index: 1100; display: grid; place-items: center; }
