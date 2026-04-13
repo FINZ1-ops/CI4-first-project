@@ -210,13 +210,13 @@
 
                         <input type="radio" class="btn-check" name="chartPeriode" id="chart_tahun" value="tahun" onchange="gantiOnline(this)">
                         <label class="btn btn-outline-secondary" for="chart_tahun">
-                            <i class="bi bi-calendar-year"></i> Tahun
+                            <i class="bi bi-calendar3"></i> Tahun
                         </label>
                     </div>
                 </div>
             </div>
             <div class="card-body pt-4">
-                <canvas id="onlineChart" height="80"></canvas>
+                <canvas id="onlineChart"></canvas>
             </div>
         </div>
 
@@ -239,6 +239,15 @@
 
         if (onlineChartInstance) onlineChartInstance.destroy();
 
+        const isMobile = window.innerWidth < 768;
+        const pointRadius = isMobile ? 2 : 4;
+        const pointHoverRadius = isMobile ? 3 : 6;
+        const fontSize = isMobile ? 9 : 11;
+
+        // Set container height for responsive behavior
+        chartCanvas.parentElement.style.position = 'relative';
+        chartCanvas.parentElement.style.height = isMobile ? '250px' : '300px';
+
         onlineChartInstance = new Chart(chartCanvas, {
             type: 'line',
             data: {
@@ -251,8 +260,8 @@
                     tension: 0.3,
                     fill: true,
                     pointBackgroundColor: '#667eea',
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: pointHoverRadius,
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2,
                     borderWidth: 2
@@ -260,12 +269,12 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 interaction: { mode: 'index', intersect: false },
                 plugins: {
                     legend: {
-                        position: 'top',
-                        labels: { usePointStyle: true, padding: 15, font: { size: 11, weight: 500 } }
+                        position: isMobile ? 'bottom' : 'top',
+                        labels: { usePointStyle: true, padding: isMobile ? 8 : 15, font: { size: fontSize, weight: 500 } }
                     }
                 },
                 scales: {
@@ -274,12 +283,12 @@
                         grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false },
                         ticks: {
                             callback: v => v + ' user',
-                            font: { size: 10 }
+                            font: { size: fontSize - 1 }
                         }
                     },
                     x: {
                         grid: { display: false, drawBorder: false },
-                        ticks: { font: { size: 10 } }
+                        ticks: { font: { size: fontSize - 1 } }
                     }
                 }
             }
@@ -302,6 +311,10 @@
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.map(t => new bootstrap.Tooltip(t));
 
+        initOnlineChart();
+    });
+
+    window.addEventListener('resize', function() {
         initOnlineChart();
     });
 

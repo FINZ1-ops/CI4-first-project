@@ -1,10 +1,19 @@
+<?php
+function formatNominalPHP($n) {
+    if ($n >= 1000000000000) return 'Rp ' . number_format($n/1000000000000, 1, ',', '.') . 'T';
+    if ($n >= 1000000000)    return 'Rp ' . number_format($n/1000000000, 1, ',', '.') . 'B';
+    if ($n >= 1000000)       return 'Rp ' . number_format($n/1000000, 1, ',', '.') . 'M';
+    if ($n >= 1000)          return 'Rp ' . number_format($n/1000, 1, ',', '.') . 'K';
+    return 'Rp ' . number_format($n, 0, ',', '.');
+} ?>
+
 <?= view('layout/header') ?>
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>
 
 <div class="pc-container">
     <div class="pc-content">
-
+    
         <!-- Page Header -->
         <div class="mb-4 pb-2">
             <div class="d-flex align-items-center justify-content-between">
@@ -47,7 +56,7 @@
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
                                 <p class="card-text small opacity-75 mb-1">Total Nominal</p>
-                                <h5 class="fw-bold mb-0">Rp <?= number_format($totalNominal / 1000000000, 1, ',', '.') ?>B</h5>
+                                <h5 class="fw-bold mb-0"><?= formatNominalPHP($totalNominal) ?></h5>
                             </div>
                             <i class="bi bi-cash-coin fa-lg opacity-50"></i>
                         </div>

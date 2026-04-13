@@ -23,54 +23,54 @@
 
         <!-- KPI Cards Row -->
         <div class="row g-3 mb-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="card border-0 bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="card-body text-white">
-                        <div class="d-flex align-items-start justify-content-between">
-                            <div>
-                                <p class="card-text small opacity-75 mb-1">Total Pendapatan</p>
-                                <h5 class="fw-bold mb-0">Rp 32.5 M</h5>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-white p-3 p-sm-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex align-items-start justify-content-between gap-2">
+                            <div style="min-width: 0;">
+                                <p class="card-text small opacity-75 mb-2">Total Pendapatan</p>
+                                <h6 class="fw-bold mb-0">Rp 32.5 M</h6>
                             </div>
-                            <i class="bi bi-graph-up fa-lg opacity-50"></i>
+                            <i class="bi bi-graph-up opacity-50" style="flex-shrink: 0; font-size: 1.25rem;"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card border-0 bg-gradient" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <div class="card-body text-white">
-                        <div class="d-flex align-items-start justify-content-between">
-                            <div>
-                                <p class="card-text small opacity-75 mb-1">Total Pesanan</p>
-                                <h5 class="fw-bold mb-0">1,745</h5>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-white p-3 p-sm-4" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="d-flex align-items-start justify-content-between gap-2">
+                            <div style="min-width: 0;">
+                                <p class="card-text small opacity-75 mb-2">Total Pesanan</p>
+                                <h6 class="fw-bold mb-0">1,745</h6>
                             </div>
-                            <i class="bi bi-cart-fill fa-lg opacity-50"></i>
+                            <i class="bi bi-cart-fill opacity-50" style="flex-shrink: 0; font-size: 1.25rem;"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card border-0 bg-gradient" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <div class="card-body text-white">
-                        <div class="d-flex align-items-start justify-content-between">
-                            <div>
-                                <p class="card-text small opacity-75 mb-1">Pesanan Selesai</p>
-                                <h5 class="fw-bold mb-0">68%</h5>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-white p-3 p-sm-4" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="d-flex align-items-start justify-content-between gap-2">
+                            <div style="min-width: 0;">
+                                <p class="card-text small opacity-75 mb-2">Pesanan Selesai</p>
+                                <h6 class="fw-bold mb-0">68%</h6>
                             </div>
-                            <i class="bi bi-check-circle-fill fa-lg opacity-50"></i>
+                            <i class="bi bi-check-circle-fill opacity-50" style="flex-shrink: 0; font-size: 1.25rem;"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card border-0 bg-gradient" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                    <div class="card-body text-white">
-                        <div class="d-flex align-items-start justify-content-between">
-                            <div>
-                                <p class="card-text small opacity-75 mb-1">Avg Order Value</p>
-                                <h5 class="fw-bold mb-0">Rp 18.6 M</h5>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-white p-3 p-sm-4" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="d-flex align-items-start justify-content-between gap-2">
+                            <div style="min-width: 0;">
+                                <p class="card-text small opacity-75 mb-2">Avg Order Value</p>
+                                <h6 class="fw-bold mb-0">Rp 18.6 M</h6>
                             </div>
-                            <i class="bi bi-wallet2 fa-lg opacity-50"></i>
+                            <i class="bi bi-wallet2 opacity-50" style="flex-shrink: 0; font-size: 1.25rem;"></i>
                         </div>
                     </div>
                 </div>
@@ -79,36 +79,38 @@
 
         <!-- Grafik + Produk Terlaris -->
         <div class="row g-3 mb-4">
-            <div class="col-xl-8">
+            <div class="col-12 col-lg-8">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white border-bottom-0 py-3 d-flex align-items-center justify-content-between">
-                        <div>
-                            <h6 class="mb-0 fw-semibold text-dark"><i class="bi bi-graph-up text-primary"></i> Grafik Penjualan</h6>
-                            <small class="text-muted d-block">Tren pendapatan & volume pesanan</small>
-                        </div>
-                        <div class="btn-group btn-group-sm" id="periodeBtns" role="group">
-                            <input type="radio" class="btn-check" name="periode" id="periode_minggu" value="minggu" checked onchange="gantiPeriode(event)">
-                            <label class="btn btn-outline-secondary" for="periode_minggu">
-                                <i class="bi bi-calendar-week"></i> Minggu
-                            </label>
+                    <div class="card-header bg-white border-bottom-0 py-3">
+                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2">
+                            <div>
+                                <h6 class="mb-0 fw-semibold text-dark"><i class="bi bi-graph-up text-primary"></i> Grafik Penjualan</h6>
+                                <small class="text-muted d-block">Tren pendapatan & volume pesanan</small>
+                            </div>
+                            <div class="btn-group btn-group-sm flex-wrap" id="periodeBtns" role="group">
+                                <input type="radio" class="btn-check" name="periode" id="periode_minggu" value="minggu" checked onchange="gantiPeriode(event)">
+                                <label class="btn btn-outline-secondary" for="periode_minggu">
+                                    <i class="bi bi-calendar-week"></i> Minggu
+                                </label>
 
-                            <input type="radio" class="btn-check" name="periode" id="periode_bulan" value="bulan" onchange="gantiPeriode(event)">
-                            <label class="btn btn-outline-secondary" for="periode_bulan">
-                                <i class="bi bi-calendar-month"></i> Bulan
-                            </label>
+                                <input type="radio" class="btn-check" name="periode" id="periode_bulan" value="bulan" onchange="gantiPeriode(event)">
+                                <label class="btn btn-outline-secondary" for="periode_bulan">
+                                    <i class="bi bi-calendar-month"></i> Bulan
+                                </label>
 
-                            <input type="radio" class="btn-check" name="periode" id="periode_tahun" value="tahun" onchange="gantiPeriode(event)">
-                            <label class="btn btn-outline-secondary" for="periode_tahun">
-                                <i class="bi bi-calendar-year"></i> Tahun
-                            </label>
+                                <input type="radio" class="btn-check" name="periode" id="periode_tahun" value="tahun" onchange="gantiPeriode(event)">
+                                <label class="btn btn-outline-secondary" for="periode_tahun">
+                                    <i class="bi bi-calendar-year"></i> Tahun
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body pt-4">
-                        <canvas id="salesChart" height="80"></canvas>
+                    <div class="card-body pt-2 pt-md-4" style="position: relative; height: 300px;">
+                        <canvas id="salesChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4">
+            <div class="col-12 col-lg-4">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header bg-white border-bottom-0 py-3">
                         <h6 class="mb-0 fw-semibold text-dark"><i class="bi bi-star-fill text-warning"></i> Produk Terlaris</h6>
@@ -223,6 +225,11 @@
 
         if (chartInstance) chartInstance.destroy();
 
+        const isMobile = window.innerWidth < 768;
+        const pointRadius = isMobile ? 2 : 3.5;
+        const pointHoverRadius = isMobile ? 3 : 5;
+        const fontSize = isMobile ? 9 : 11;
+
         chartInstance = new Chart(ctx, {
             type: 'line',
             data: {
@@ -235,8 +242,8 @@
                     tension: 0.3,
                     fill: true,
                     pointBackgroundColor: '#667eea',
-                    pointRadius: 3.5,
-                    pointHoverRadius: 5,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: pointHoverRadius,
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2,
                     borderWidth: 2
@@ -248,8 +255,8 @@
                     tension: 0.3,
                     fill: true,
                     pointBackgroundColor: '#28a745',
-                    pointRadius: 3.5,
-                    pointHoverRadius: 5,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: pointHoverRadius,
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2,
                     borderWidth: 2,
@@ -258,15 +265,15 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 interaction: { mode: 'index', intersect: false },
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: isMobile ? 'bottom' : 'top',
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
-                            font: { size: 11, weight: 500 }
+                            padding: isMobile ? 8 : 15,
+                            font: { size: fontSize, weight: 500 }
                         }
                     },
                     filler: { propagate: true }
@@ -278,7 +285,7 @@
                         grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false },
                         ticks: {
                             callback: v => formatNominal(v),
-                            font: { size: 10 }
+                            font: { size: fontSize - 1 }
                         }
                     },
                     y1: {
@@ -287,12 +294,12 @@
                         grid: { drawOnChartArea: false },
                         ticks: {
                             callback: v => v.toLocaleString('id-ID'),
-                            font: { size: 10 }
+                            font: { size: fontSize - 1 }
                         }
                     },
                     x: {
                         grid: { display: false, drawBorder: false },
-                        ticks: { font: { size: 10 } }
+                        ticks: { font: { size: fontSize - 1 } }
                     }
                 }
             }
@@ -383,6 +390,12 @@
         initChart();
         tampilkanTerlaris('minggu');
         tampilkanTabelProduk('minggu');
+    });
+
+    window.addEventListener('resize', function() {
+        if (chartInstance) {
+            chartInstance.resize();
+        }
     });
 </script>
 
