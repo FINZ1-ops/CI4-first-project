@@ -29,7 +29,7 @@
                     <div class="card-body text-white position-relative z-2">
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
-                                <div class="stat-label opacity-75 mb-2">Total Pengguna</div>
+                                <div class="mb-2" style="color:rgba(255,255,255,0.85);font-size:13px">Total Pengguna</div>
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_user) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
@@ -48,7 +48,7 @@
                     <div class="card-body text-white position-relative z-2">
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
-                                <div class="stat-label opacity-75 mb-2">Total Pesanan</div>
+                                <div class="mb-2" style="color:rgba(255,255,255,0.85);font-size:13px">Total Pesanan</div>
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_order) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
@@ -67,7 +67,7 @@
                     <div class="card-body text-white position-relative z-2">
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
-                                <div class="stat-label opacity-75 mb-2">Total Pendapatan</div>
+                                <div class="mb-2" style="color:rgba(255,255,255,0.85);font-size:13px">Total Pendapatan</div>
                                 <div class="stat-value fw-bold" style="font-size: 24px;"><?= $total_income ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
@@ -86,7 +86,7 @@
                     <div class="card-body text-white position-relative z-2">
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
-                                <div class="stat-label opacity-75 mb-2">Total Produk</div>
+                                <div class="mb-2" style="color:rgba(255,255,255,0.85);font-size:13px">Total Produk</div>
                                 <div class="stat-value fw-bold" style="font-size: 28px;"><?= number_format($total_produk) ?></div>
                             </div>
                             <div class="stat-icon opacity-25" style="font-size: 40px;">
@@ -107,7 +107,7 @@
             <div class="col-xl-8">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header background: var(--surface) border-bottom py-3 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0 fw-semibold">📊 Grafik Penjualan</h6>
+                        <h6 class="mb-0 fw-semibold bi bi-graph-up gap-2"> Grafik Penjualan</h6>
                         <div class="btn-group btn-group-sm" id="periodeBtns">
                             <button class="btn btn-outline-primary active" onclick="gantiPeriode('minggu', this)">Minggu</button>
                             <button class="btn btn-outline-primary" onclick="gantiPeriode('bulan', this)">Bulan</button>
@@ -122,7 +122,7 @@
             <div class="col-xl-4">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header background: var(--surface) border-bottom py-3">
-                        <h6 class="mb-0 fw-semibold">📦 Status Pesanan</h6>
+                        <h6 class="mb-0 fw-semibold bi bi-box-fill"> Status Pesanan</h6>
                     </div>
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                         <canvas id="donutChart" height="200"></canvas>
@@ -159,7 +159,7 @@
             <div class="col-xl-8">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header background: var(--surface) border-bottom py-3 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0 fw-semibold">🛒 Pesanan Terbaru</h6>
+                        <h6 class="mb-0 fw-semibold bi bi-cart-fill"> Pesanan Terbaru</h6>
                         <a href="/pesanan" class="btn btn-sm btn-primary"><i class="bi bi-eye me-1"></i> Lihat Semua</a>
                     </div>
                     <div class="card-body p-0">
@@ -233,7 +233,7 @@
                                         </td>
                                         <td><small>Sony WH-1000XM5</small></td>
                                         <td><small class="fw-bold text-primary">Rp 1.2M</small></td>
-                                        <td><span class="badge bg-info bg-opacity-75">📦 Dikirim</span></td>
+                                        <td><span class="badge bg-info bg-opacity-75 bi bi-box2-fill"> Dikirim</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -246,7 +246,7 @@
             <div class="col-xl-4">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header background: var(--surface) border-bottom py-3">
-                        <h6 class="mb-0 fw-semibold">⭐ Produk Terlaris</h6>
+                        <h6 class="mb-0 fw-semibold bi bi-star-fill"> Produk Terlaris</h6>
                     </div>
                     <div class="card-body">
                         <div class="mb-4">

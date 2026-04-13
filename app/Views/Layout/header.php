@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script>
     (function() {
@@ -142,15 +143,26 @@
             position: fixed; top: 0;
             left: var(--sidebar-width); right: 0;
             height: var(--header-height);
-            display: flex; align-items: center;
-            padding: 0 24px;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 20px;
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             z-index: 1020;
             transition: left 0.3s ease, background 0.3s, border-color 0.3s;
         }
 
-        .pc-header .header-wrapper { display: flex; align-items: center; width: 100%; }
+        .pc-header .header-wrapper {
+            display: flex; align-items: center; width: 100%; gap: 8px;
+        }
+
+        /* Search bar theming */
+        #globalSearch:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(70,128,255,0.15);
+            border-color: var(--accent) !important;
+            background: var(--surface) !important;
+        }
+        #globalSearch::placeholder { color: var(--text-muted); }
 
         .pc-head-link {
             width: 38px; height: 38px; border-radius: 8px;

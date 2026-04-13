@@ -34,8 +34,12 @@
 
     <div class="navbar-wrapper">
         <div class="m-header">
-            <a href="/dashboard" class="b-brand text-primary">
-                <span class="badge bg-primary rounded-pill ms-2 fw-bold fs-6">NiceWeb</span>
+            <a href="/dashboard" class="b-brand d-flex align-items-center gap-2 text-decoration-none">
+                <div style="width:34px;height:34px;background:var(--accent);border-radius:10px;
+                            display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i class="bi bi-graph-up-arrow" style="color:#fff;font-size:16px"></i>
+                </div>
+                <span class="fw-bold" style="font-size:17px;color:var(--text-strong);letter-spacing:-.3px">NiceWeb</span>
             </a>
         </div>
 

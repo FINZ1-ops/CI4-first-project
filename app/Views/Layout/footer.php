@@ -71,7 +71,6 @@
             root.style.setProperty('--accent-soft', preset.accentSoft);
             root.style.setProperty('--hover-soft',  preset.hoverSoft);
 
-            // Override font jika ada
             if (s.font) root.style.setProperty('--font', s.font);
 
             // Tema class
@@ -106,6 +105,9 @@
         if (layoutBgInput)  layoutBgInput.addEventListener('input', () => update('layoutBg', layoutBgInput.value));
 
         applyVars(load());
+
+        // Expose untuk topbar dark/light toggle
+        window.applyVarsFromStorage = function() { applyVars(load()); };
     }
 
     // Toggle sidebar — desktop: collapsed, mobile: open
