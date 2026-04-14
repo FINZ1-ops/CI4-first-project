@@ -1,45 +1,71 @@
 <nav class="pc-sidebar">
     <style>
+        /* Sidebar overlay gradient */
+        .pc-sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(70,128,255,0.08) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .pc-sidebar .navbar-wrapper { position: relative; z-index: 1; }
+
         .pc-sidebar .pc-link {
             transition: background .2s ease, color .2s ease, transform .2s ease;
         }
 
-        .pc-sidebar .pc-link:hover,
-        .pc-sidebar .pc-link:focus {
-            background: rgba(70, 128, 255, .1);
-            color: var(--primary);
-            transform: translateX(2px);
-        }
-
-        .pc-sidebar .pc-link:hover .pc-micon,
-        .pc-sidebar .pc-link:focus .pc-micon {
-            background: rgba(70, 128, 255, .15);
-        }
-
-        .pc-sidebar .pc-link:hover .pc-micon i,
-        .pc-sidebar .pc-link:focus .pc-micon i {
-            color: var(--primary);
-        }
-
-        .pc-sidebar .pc-navbar .pc-item button.pc-link {
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
         .pc-sidebar .pc-item + .pc-item {
-            margin-top: 4px;
+            margin-top: 2px;
+        }
+
+        /* User card di bawah sidebar */
+        .sidebar-user-card {
+            margin: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-user-card .user-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px; color: #fff;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user-card .user-name {
+            font-size: 13px; font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.2;
+        }
+
+        .sidebar-user-card .user-role {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
         }
     </style>
 
     <div class="navbar-wrapper">
         <div class="m-header">
             <a href="/dashboard" class="b-brand d-flex align-items-center gap-2 text-decoration-none">
-                <div style="width:34px;height:34px;background:var(--accent);border-radius:10px;
-                            display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <i class="bi bi-graph-up-arrow" style="color:#fff;font-size:16px"></i>
+                <div style="width:36px;height:36px;background:var(--accent);border-radius:10px;
+                            display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                            box-shadow:0 4px 12px rgba(70,128,255,0.4)">
+                    <i class="bi bi-graph-up-arrow" style="color:#fff;font-size:17px"></i>
                 </div>
-                <span class="fw-bold" style="font-size:17px;color:var(--text-strong);letter-spacing:-.3px">NiceWeb</span>
+                <div>
+                    <span class="fw-bold" style="font-size:17px;color:#fff;letter-spacing:-.3px">NiceWeb</span>
+                    <div style="font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.05em;margin-top:-2px">ADMIN PANEL</div>
+                </div>
             </a>
         </div>
 
@@ -118,6 +144,20 @@
                 </li>
             </ul>
         </div>
+
+        <!-- User Card -->
+        <div class="sidebar-user-card">
+            <div class="user-avatar">AD</div>
+            <div>
+                <div class="user-name">Administrator</div>
+                <div class="user-role">Super Admin</div>
+            </div>
+            <a href="/profile" class="ms-auto text-decoration-none"
+               style="color:rgba(255,255,255,0.4);font-size:16px">
+                <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </div>
+
     </div>
 
     <div id="app-settings-panel" class="settings-panel d-none">

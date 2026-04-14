@@ -229,7 +229,7 @@
                 <div class="card border-0" style="border:1px solid var(--border)!important">
                     <div class="card-header py-3 d-flex align-items-center justify-content-between"
                          style="background:transparent;border-color:var(--border)">
-                        <h6 class="mb-0 fw-semibold" style="color:var(--text-strong)">
+                        <h6 class="mb-0 fw-semibold" style="color:var(--text-strong)" >
                             <i class="bi bi-cart-fill me-2" style="color:var(--accent)"></i>Pesanan Terbaru
                         </h6>
                         <a href="/pesanan" class="btn btn-sm btn-primary">
