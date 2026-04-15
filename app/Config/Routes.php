@@ -15,3 +15,4 @@ $routes->get('/pesanan', 'Pesanan::index');
 $routes->get('/penjualan', 'Penjualan::index');
 $routes->get('/suplai', 'Suplai::index');
 $routes->get('/profile', 'Profile::index');
+$routes->get('/lokasi', 'Lokasi::index');

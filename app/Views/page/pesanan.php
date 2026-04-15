@@ -1,8 +1,8 @@
 <?php
 function formatNominalPHP($n) {
     if ($n >= 1000000000000) return 'Rp ' . number_format($n/1000000000000, 1, ',', '.') . 'T';
-    if ($n >= 1000000000)    return 'Rp ' . number_format($n/1000000000, 1, ',', '.') . 'B';
-    if ($n >= 1000000)       return 'Rp ' . number_format($n/1000000, 1, ',', '.') . 'M';
+    if ($n >= 1000000000)    return 'Rp ' . number_format($n/1000000000, 1, ',', '.') . 'M';
+    if ($n >= 1000000)       return 'Rp ' . number_format($n/1000000, 1, ',', '.') . 'JT';
     if ($n >= 1000)          return 'Rp ' . number_format($n/1000, 1, ',', '.') . 'K';
     return 'Rp ' . number_format($n, 0, ',', '.');
 } ?>

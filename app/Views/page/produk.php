@@ -117,6 +117,10 @@
                                         'Tablet'     => ['icon' => 'bi-tablet',  'color' => '#ffc107'],
                                         'Headphone'  => ['icon' => 'bi-headphones', 'color' => '#dc3545'],
                                         'Smartwatch' => ['icon' => 'bi-smartwatch', 'color' => '#17a2b8'],
+                                        'Speaker'    => ['icon' => 'bi-speaker', 'color' => '#fd7e14'],
+                                        'Gaming Console' => ['icon' => 'bi-controller', 'color' => '#6f42c1'],
+                                        'Smart Home' => ['icon' => 'bi-house', 'color' => '#20c997'],
+                                        'Earbuds'    => ['icon' => 'bi-earbuds', 'color' => '#e83e8c'],
                                     ];
                                 ?>
                                 <?php foreach ($product as $p):

@@ -33,6 +33,20 @@
             $totalNilai     = array_sum(array_column(iterator_to_array($suplai), 'subtotal'));
             // reset pointer setelah iterator_to_array
             $suplai = array_values((array)$suplai);
+
+            // Format nominal K, M, B, T
+            function formatNominal($n) {
+                if ($n >= 1000000000000) {
+                    return 'Rp ' . number_format($n / 1000000000000, 1, ',', '.') . 'T';
+                } elseif ($n >= 1000000000) {
+                    return 'Rp ' . number_format($n / 1000000000, 1, ',', '.') . 'M';
+                } elseif ($n >= 1000000) {
+                    return 'Rp ' . number_format($n / 1000000, 1, ',', '.') . 'JT';
+                } elseif ($n >= 1000) {
+                    return 'Rp ' . number_format($n / 1000, 1, ',', '.') . 'K';
+                }
+                return 'Rp ' . number_format($n, 0, ',', '.');
+            }
         ?>
 
         <!-- Stat Cards -->
@@ -82,7 +96,7 @@
                         <div class="d-flex align-items-start justify-content-between">
                             <div>
                                 <p class="card-text small opacity-75 mb-1">Total Nilai</p>
-                                <h5 class="fw-bold mb-0" style="font-size: 16px;">Rp <?= number_format($totalNilai / 1000000000, 1, ',', '.') ?>B</h5>
+                                <h5 class="fw-bold mb-0" style="font-size: 16px;"><?= formatNominal($totalNilai) ?></h5>
                             </div>
                             <i class="bi bi-cash-coin fa-lg opacity-50"></i>
                         </div>
@@ -186,7 +200,7 @@
                                     </td>
                                     <td class="text-muted small"><?= date('d M Y', strtotime($s['tanggal'])) ?></td>
                                     <td class="text-end pe-4 fw-semibold text-success">
-                                        Rp <?= number_format($s['subtotal'], 0, ',', '.') ?>
+                                        <?= formatNominal($s['subtotal']) ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -197,7 +211,7 @@
                             <tr class="fw-bold" style="border-top: 2px solid var(--border)">
                                 <td colspan="5" class="ps-4">Total Keseluruhan</td>
                                 <td class="text-end pe-4 text-success">
-                                    Rp <?= number_format($totalNilai, 0, ',', '.') ?>
+                                    <?= formatNominal($totalNilai) ?>
                                 </td>
                             </tr>
                         </tfoot>

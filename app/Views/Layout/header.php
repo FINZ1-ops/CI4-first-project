@@ -184,13 +184,69 @@
         }
         #globalSearch::placeholder { color: var(--text-muted); }
 
-        .pc-head-link {
-            width: 38px; height: 38px; border-radius: 8px;
-            display: inline-flex; align-items: center; justify-content: center;
-            background: transparent; color: var(--text);
-            font-size: 20px; border: none;
-            transition: background 0.2s, color 0.2s; cursor: pointer;
-        }
+    .pc-head-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      border-radius:8px;
+      background:transparent;
+      color:var(--text);
+      transition:.2s;
+    }
+
+    .pc-head-link.icon-link{
+      width:38px;
+      height:38px;
+      font-size:20px;
+      padding:0;
+    }
+
+    .pc-head-link.profile-link{
+      width:auto;
+      height:38px;
+      padding:0 .5rem;
+      font-size:14px;
+      white-space:nowrap;
+    }
+
+    .pc-header .ms-auto > ul{
+      display:flex;
+      align-items:center;
+      gap:.25rem;
+      flex-wrap:nowrap;
+    }
+
+    /* parent yang membungkus bell + profile */
+    .pc-header .pc-head-right {
+      display: flex !important;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* tiap item tetap di flow normal */
+    .pc-header .pc-head-right .pc-h-item {
+      position: relative;
+      flex: 0 0 auto;
+      margin: 0 !important;
+    }
+
+    /* area klik jangan melebar aneh */
+    .pc-header .pc-head-right .pc-head-link {
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      width: auto;
+      min-width: 0;
+    }
+
+    /* khusus tombol lonceng */
+    .pc-header .pc-head-right .pc-h-item > button.pc-head-link {
+      width: 36px;
+      height: 36px;
+      justify-content: center;
+      padding: 0;
+    }
 
         .pc-head-link:hover { background: var(--hover-soft); color: var(--accent); }
         .pc-h-badge { position: absolute; top: 0; right: 0; font-size: 9px; padding: 2px 5px; }

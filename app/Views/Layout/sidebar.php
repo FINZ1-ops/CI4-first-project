@@ -125,6 +125,13 @@
                     </a>
                 </li>
 
+                <li class="pc-item <?= uri_string() == 'lokasi' ? 'active' : '' ?>">
+                    <a href="/lokasi" class="pc-link">
+                        <span class="pc-micon"><i class="bi bi-geo-alt-fill"></i></span>
+                        <span class="pc-mtext">Data Lokasi</span>
+                    </a>
+                </li>
+
                 <li class="pc-item pc-caption">
                     <label>Akun</label>
                 </li>

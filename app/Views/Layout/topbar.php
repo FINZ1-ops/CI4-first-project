@@ -45,19 +45,19 @@
 
                 <!-- Toggle Dark/Light -->
                 <li class="pc-h-item">
-                    <a href="#" class="pc-head-link" id="themeToggleBtn" title="Toggle tema">
+                    <a href="#" class="pc-head-link icon-link" id="themeToggleBtn" title="Toggle tema">
                         <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
                     </a>
                 </li>
 
                 <!-- Notifikasi -->
-                <li class="dropdown pc-h-item">
-                    <a class="pc-head-link position-relative" data-bs-toggle="dropdown" href="#" role="button">
+                <div class="dropdown pc-h-item">
+                    <button class="pc-head-link icon-link position-relative" data-bs-toggle="dropdown" href="#" role="button">
                         <i class="bi bi-bell-fill"></i>
                         <span style="position:absolute;top:7px;right:7px;width:8px;height:8px;
                                      background:#dc3545;border-radius:50%;
                                      border:2px solid var(--surface)"></span>
-                    </a>
+                    </button>
                     <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown">
                         <div class="d-flex align-items-center justify-content-between px-3 py-2"
                              style="border-bottom:1px solid var(--border)">
@@ -104,12 +104,12 @@
                             <a href="#" class="text-primary small fw-semibold">Lihat semua notifikasi</a>
                         </div>
                     </div>
-                </li>
+                </div>
 
                 <!-- Profile -->
-                <li class="dropdown pc-h-item">
-                    <a class="pc-head-link d-flex align-items-center gap-2 px-2"
-                       data-bs-toggle="dropdown" href="#" role="button">
+                <div class="dropdown pc-h-item">
+                    <a class="pc-head-link profile-link d-flex align-items-center gap-2"
+                       data-bs-toggle="dropdown" href="#" role="button" id="themeToggleBtn">
                         <div style="width:32px;height:32px;border-radius:50%;
                                     background:var(--accent);
                                     display:flex;align-items:center;justify-content:center;
@@ -117,7 +117,7 @@
                             AD
                         </div>
                         <span class="d-none d-sm-inline-block fw-semibold"
-                              style="font-size:14px;color:var(--text-strong)">Admin</span>
+                              style="font-size:14px;color:var(--text-strong)"> Admin</span>
                         <i class="bi bi-chevron-down d-none d-sm-inline-block"
                            style="font-size:11px;opacity:.5;color:var(--text)"></i>
                     </a>
@@ -157,7 +157,8 @@
                             </a>
                         </div>
                     </div>
-                </li>
+                </div>
+                </div>
 
             </ul>
         </div>

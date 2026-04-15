@@ -256,6 +256,11 @@
                                         ['id'=>'#019','name'=>'Citra D','bg'=>'2dca72','produk'=>'Monitor 24"','total'=>'Rp 2.8M','status'=>'Selesai','sc'=>'success','color'=>'#28a745'],
                                         ['id'=>'#018','name'=>'Deni P','bg'=>'dc3545','produk'=>'Keyboard Mech','total'=>'Rp 750K','status'=>'Batal','sc'=>'danger','color'=>'#dc3545'],
                                         ['id'=>'#017','name'=>'Eka W','bg'=>'6610f2','produk'=>'Sony WH-1000','total'=>'Rp 1.2M','status'=>'Dikirim','sc'=>'info','color'=>'#17a2b8'],
+                                        ['id'=>'#016','name'=>'Fajar M','bg'=>'ff6b6b','produk'=>'iPad Pro','total'=>'Rp 9.5M','status'=>'Selesai','sc'=>'success','color'=>'#28a745'],
+                                        ['id'=>'#015','name'=>'Gina S','bg'=>'20c997','produk'=>'Smartwatch X','total'=>'Rp 2.3M','status'=>'Proses','sc'=>'warning','color'=>'#ffc107'],
+                                        ['id'=>'#014','name'=>'Hadi T','bg'=>'e83e8c','produk'=>'Speaker JBL','total'=>'Rp 1.1M','status'=>'Batal','sc'=>'danger','color'=>'#dc3545'],
+                                        ['id'=>'#013','name'=>'Intan L','bg'=>'fd7e14','produk'=>'Laptop ASUS','total'=>'Rp 15M','status'=>'Dikirim','sc'=>'info','color'=>'#17a2b8'],
+                                        ['id'=>'#012','name'=>'Joko K','bg'=>'6f42c1','produk'=>'Google Nest Hub','total'=>'Rp 1.3M','status'=>'Selesai','sc'=>'success','color'=>'#28a745'],
                                     ];
                                     foreach($orders as $o):
                                     ?>
@@ -308,6 +313,11 @@
                             ['nama'=>'MacBook Pro',         'terjual'=>186, 'persen'=>48, 'color'=>'success'],
                             ['nama'=>'Xiaomi 14 Ultra',     'terjual'=>142, 'persen'=>38, 'color'=>'info'],
                             ['nama'=>'Sony WH-1000XM5',     'terjual'=>98,  'persen'=>25, 'color'=>'danger'],
+                            ['nama'=>'Nintendo Switch OLED', 'terjual'=>76,  'persen'=>18, 'color'=>'secondary'],
+                            ['nama'=>'Bose QuietComfort 45', 'terjual'=>54,  'persen'=>12, 'color'=>'dark'],
+                            ['nama'=>'HP Spectre x360',     'terjual'=>32,  'persen'=>8,  'color'=>'primary'],
+                            ['nama'=>'Google Nest Hub',     'terjual'=>28,  'persen'=>6,  'color'=>'warning'],
+                            ['nama'=>'Microsoft Xbox Series X', 'terjual'=>16,  'persen'=>4,  'color'=>'success'],
                         ];
                         foreach($produkTerlaris as $p):
                         ?>

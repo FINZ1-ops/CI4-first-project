@@ -34,12 +34,18 @@ class Produk extends BaseController
             ['name_product' => 'Realme GT 5 Pro', 'category' => 'Smartphone', 'price' => 5999000],
             ['name_product' => 'ASUS ROG Gaming Laptop', 'category' => 'Laptop', 'price' => 18999000],
             ['name_product' => 'Samsung Galaxy Z Fold 6', 'category' => 'Smartphone', 'price' => 18999000],
-            ['name_product' => 'Bose QuietComfort 45', 'category' => 'Headphone', 'price' => 3499000]
+            ['name_product' => 'Bose QuietComfort 45', 'category' => 'Headphone', 'price' => 3499000],
+            ['name_product' => 'Nitendo Switch OLED', 'category' => 'Gaming Console', 'price' => 4999000],
+            ['name_product' => 'Apple AirPods Max', 'category' => 'Headphone', 'price' => 6999000],
+            ['name_product' => 'HP Spectre x360', 'category' => 'Laptop', 'price' => 15999000],
+            ['name_product' => 'Google Nest Hub', 'category' => 'Smart Home', 'price' => 1299000],
+            ['name_product' => 'Sony PlayStation 5', 'category' => 'Gaming Console', 'price' => 7999000],
+            ['name_product' => 'Microsoft Xbox Series X', 'category' => 'Gaming Console', 'price' => 7999000],
        ];
 
        if ($search){
          $product = array_filter($semua, function($p) use ($search) {
-            return stripos($p['name_product'], $search) !== false;
+            return stripos($p['name_product'],$search) !== false || stripos($p['category'],$search) !== false;
         });
        } else {
         $product = $semua;
@@ -49,6 +55,7 @@ class Produk extends BaseController
        $data = [
         'title'=>'Data Produk',
         'product' => $product,
+        'category' => array_unique(array_column($product, 'category')),
         'search' => $search,
        ];
 

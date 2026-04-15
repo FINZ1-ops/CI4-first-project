@@ -28,7 +28,7 @@
                         <div class="d-flex align-items-start justify-content-between gap-2">
                             <div style="min-width: 0;">
                                 <p class="card-text small opacity-75 mb-2">Total Pendapatan</p>
-                                <h6 class="fw-bold mb-0">Rp 32.5 M</h6>
+                                <h6 class="fw-bold mb-0">Rp 32.5 JT</h6>
                             </div>
                             <i class="bi bi-graph-up opacity-50" style="flex-shrink: 0; font-size: 1.25rem;"></i>
                         </div>
@@ -169,7 +169,7 @@
                         </thead>
                         <tbody id="produkTable">
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-5">
+                                <td colspan="10" class="text-center text-muted py-5">
                                     <small><i class="bi bi-hourglass-split"></i> Loading...</small>
                                 </td>
                             </tr>
@@ -190,8 +190,8 @@
         if (!Number.isFinite(n)) return 'Rp 0';
         const a = Math.abs(n);
         if (a >= 1e12) return 'Rp ' + (n/1e12).toFixed(1) + 'T';
-        if (a >= 1e9)  return 'Rp ' + (n/1e9).toFixed(1) + 'B';
-        if (a >= 1e6)  return 'Rp ' + (n/1e6).toFixed(1) + 'M';
+        if (a >= 1e9)  return 'Rp ' + (n/1e9).toFixed(1) + 'M';
+        if (a >= 1e6)  return 'Rp ' + (n/1e6).toFixed(1) + 'JT';
         if (a >= 1e3)  return 'Rp ' + (n/1e3).toFixed(1) + 'K';
         return 'Rp ' + Math.floor(n);
     }
@@ -350,7 +350,7 @@
             return;
         }
 
-        const colors = ['#667eea', '#f093fb', '#4facfe', '#fa709a', '#fdbb2d', '#fd7e14', '#e83e8c'];
+        const colors = ['#667eea', '#f093fb', '#4facfe', '#fa709a', '#fdbb2d', '#fd7e14', '#e83e8c', '#20c997', '#6f42c1', '#17a2b8'];
         const maxRevenue = Math.max(...d.map(p => p.pendapatan));
 
         document.getElementById('produkTable').innerHTML = d.map((p, i) => {
