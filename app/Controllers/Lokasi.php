@@ -2,15 +2,38 @@
 
 namespace App\Controllers;
 
+/**
+ * Lokasi Controller
+ * Handles location (lokasi) data display with map visualization
+ *
+ * Features:
+ * - Display export/import location data
+ * - Filter and search functionality
+ * - Statistical calculations
+ * - Map data aggregation
+ */
 class Lokasi extends BaseController
 {
+    /**
+     * Display location index page with filtering and map data
+     *
+     * Query Parameters:
+     * - search: Search across city, province, or product names
+     * - tipe: Filter by transaction type (semua/ekspor/impor)
+     *
+     * @return string Rendered location index view
+     */
     public function index()
     {
         $search = $this->request->getGet('search');
         $filter_tipe = $this->request->getGet('tipe');
 
+        /**
+         * Sample location data
+         * Structure: city, province, SVG ID, type, product, quantity, value, date, country
+         */
         $semua = [
-            // EKSPOR
+            // Export transactions
             ['kota' => 'Jakarta',    'provinsi' => 'DKI Jakarta',       'svg_id' => 'ID-JK', 'tipe' => 'ekspor', 'produk' => 'iPhone 15',        'jumlah' => 120, 'nilai' => 1020000000,  'tanggal' => '2026-06-01', 'negara' => 'Malaysia'],
             ['kota' => 'Surabaya',   'provinsi' => 'Jawa Timur',        'svg_id' => 'ID-JI', 'tipe' => 'ekspor', 'produk' => 'MacBook Pro',       'jumlah' => 45,  'nilai' => 1125000000, 'tanggal' => '2026-06-03', 'negara' => 'Singapura'],
             ['kota' => 'Bandung',    'provinsi' => 'Jawa Barat',        'svg_id' => 'ID-JB', 'tipe' => 'ekspor', 'produk' => 'Samsung S24',       'jumlah' => 80,  'nilai' => 680000000,  'tanggal' => '2026-06-05', 'negara' => 'Thailand'],
@@ -22,7 +45,8 @@ class Lokasi extends BaseController
             ['kota' => 'Manokwari',   'provinsi' => 'Papua Barat',       'svg_id' => 'ID-PB', 'tipe' => 'ekspor', 'produk' => 'ASUS ROG Laptop',   'jumlah' => 15,  'nilai' => 300000000,  'tanggal' => '2026-06-17', 'negara' => 'Taiwan'],
             ['kota' => 'Mataram',    'provinsi' => 'Nusa Tenggara Barat','svg_id' => 'ID-NB', 'tipe' => 'ekspor', 'produk' => 'Amazon Echo Dot',   'jumlah' => 50,  'nilai' => 250000000,  'tanggal' => '2026-06-19', 'negara' => 'Amerika Serikat'],
 
-            // IMPOR
+            // Import transactions
+            ['kota' => 'Jakarta',    'provinsi' => 'DKI Jakarta',       'svg_id' => 'ID-JK', 'tipe' => 'impor',  'produk' => 'iPhone 15',        'jumlah' => 120, 'nilai' => 1020000000,  'tanggal' => '2026-06-01', 'negara' => 'Malaysia'],
             ['kota' => 'Semarang',   'provinsi' => 'Jawa Tengah',       'svg_id' => 'ID-JT', 'tipe' => 'impor',  'produk' => 'Nintendo Switch',   'jumlah' => 150, 'nilai' => 600000000,  'tanggal' => '2026-06-02', 'negara' => 'Jepang'],
             ['kota' => 'Yogyakarta', 'provinsi' => 'DI Yogyakarta',     'svg_id' => 'ID-YO', 'tipe' => 'impor',  'produk' => 'LG OLED TV',        'jumlah' => 40,  'nilai' => 800000000,  'tanggal' => '2026-06-04', 'negara' => 'Korea Selatan'],
             ['kota' => 'Pontianak',  'provinsi' => 'Kalimantan Barat',  'svg_id' => 'ID-KB', 'tipe' => 'impor',  'produk' => 'Google Pixel',      'jumlah' => 90,  'nilai' => 486000000,  'tanggal' => '2026-06-06', 'negara' => 'Amerika Serikat'],
@@ -35,6 +59,7 @@ class Lokasi extends BaseController
             ['kota' => 'Kupang',     'provinsi' => 'Nusa Tenggara Timur','svg_id' => 'ID-NT','tipe' => 'impor',  'produk' => 'Lenovo ThinkPad',   'jumlah' => 15,  'nilai' => 300000000,  'tanggal' => '2026-06-20', 'negara' => 'China'],
         ];
 
+        // Apply search and type filters
         $lokasi = array_filter($semua, function($l) use ($search, $filter_tipe) {
             if ($search && stripos($l['kota'], $search) === false &&
                            stripos($l['produk'], $search) === false &&
@@ -45,12 +70,12 @@ class Lokasi extends BaseController
 
         $lokasi = array_values($lokasi);
 
-        // Hitung stats
+        // Calculate statistics for display cards
         $totalEkspor = array_sum(array_column(array_filter($lokasi, fn($l) => $l['tipe']==='ekspor'), 'nilai'));
         $totalImpor  = array_sum(array_column(array_filter($lokasi, fn($l) => $l['tipe']==='impor'),  'nilai'));
         $totalLokasi = count($lokasi);
 
-        // Data per provinsi untuk peta
+        // Aggregate data by province for map visualization
         $peta = [];
         foreach ($lokasi as $l) {
             $id = $l['svg_id'];

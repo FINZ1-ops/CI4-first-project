@@ -3,6 +3,13 @@
 <?= view('layout/topbar') ?>
 
 <?php
+/**
+ * Format nominal value to Rupiah currency with abbreviation
+ * Converts large numbers to T (trillion), M (million), JT (juta), K (thousand)
+ *
+ * @param int $n The numeric value to format
+ * @return string Formatted currency string (e.g., "Rp 1.2M")
+ */
 function formatNominal($n) {
     if ($n >= 1000000000000) {
         return 'Rp ' . number_format($n / 1000000000000, 1, ',', '.') . 'T';
@@ -18,9 +25,31 @@ function formatNominal($n) {
 ?>
 
 <style>
-.map-modal { position: fixed; inset: 0; z-index: 2000; display: none; place-items: center; padding: 12px; }
+/* ============================================================================
+   MAP MODAL STYLES
+   ============================================================================ */
+
+/** Map modal overlay - fixed positioning covering entire viewport */
+.map-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    place-items: center;
+    padding: 12px;
+}
+
 .map-modal.active { display: grid; }
-.map-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+
+/** Semi-transparent backdrop with blur effect */
+.map-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+/** Map modal card container */
 .map-card {
     position: relative;
     z-index: 1;
@@ -29,11 +58,12 @@ function formatNominal($n) {
     background: var(--surface);
     border-radius: 16px;
     border: 1px solid var(--border);
-    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
+
 .map-card-header {
     padding: 12px 16px;
     border-bottom: 1px solid var(--border);
@@ -44,13 +74,19 @@ function formatNominal($n) {
     flex-wrap: wrap;
     flex-shrink: 0;
 }
+
 .map-card-body {
     flex: 1;
     min-height: 0;
     position: relative;
     overflow: hidden;
 }
-/* SCROLLABLE MAP AREA */
+
+/* ============================================================================
+   SCROLLABLE MAP CONTAINER
+   ============================================================================ */
+
+/** Map container with smooth scrolling and grab cursor */
 #map-container {
     width: 100%;
     height: 100%;
@@ -59,8 +95,10 @@ function formatNominal($n) {
     cursor: grab;
     touch-action: pan-x pan-y;
 }
+
 #map-container:active { cursor: grabbing; }
-/* IMPORTANT: jangan dipaksa center terus, biarkan natural + scroll */
+
+/** SVG wrapper for zoom transforms and positioning */
 #map-inner {
     width: max-content;
     min-width: 100%;
@@ -69,12 +107,16 @@ function formatNominal($n) {
     transform-origin: top left;
     transition: transform 0.1s;
 }
+
+/** Indonesian SVG map with responsive sizing */
 #svg-indonesia {
     display: block;
-    width: 1100px;   /* desktop baseline */
-    max-width: none; /* supaya tidak ketekan parent */
+    width: 1100px;
+    max-width: none;
     height: auto;
 }
+
+/** Styling for individual province paths */
 #svg-indonesia path {
     fill: var(--bg);
     stroke: var(--border);
@@ -82,60 +124,74 @@ function formatNominal($n) {
     cursor: pointer;
     transition: fill 0.2s, opacity 0.2s;
 }
-#svg-indonesia path:hover { opacity: 0.8; }
-#svg-indonesia path.ekspor { fill: #4680FF; }
-#svg-indonesia path.impor  { fill: #f5576c; }
-#svg-indonesia path.ekspor:hover { fill: #2d5fc4; }
-#svg-indonesia path.impor:hover  { fill: #c72d44; }
 
-/* MAP TOOLTIP */
+#svg-indonesia path:hover { opacity: 0.8; }
+
+/** Export and import province styling */
+#svg-indonesia path.ekspor { fill: #4680FF; }
+#svg-indonesia path.impor { fill: #f5576c; }
+#svg-indonesia path.ekspor:hover { fill: #2d5fc4; }
+#svg-indonesia path.impor:hover { fill: #c72d44; }
+
+/* ============================================================================
+   TOOLTIP STYLES
+   ============================================================================ */
+
+/** Hover tooltip showing province details */
 .map-tooltip {
-    position:fixed;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:8px 12px;
-    font-size:12px;
-    color:var(--text-strong);
-    pointer-events:none;
-    z-index:3000;
-    display:none;
-    box-shadow:0 4px 16px rgba(0,0,0,0.15);
-    max-width:180px;
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-strong);
+    pointer-events: none;
+    z-index: 3000;
+    display: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    max-width: 180px;
 }
 
+/* ============================================================================
+   MOBILE RESPONSIVE STYLES (max-width: 576px)
+   ============================================================================ */
+
 @media (max-width: 576px) {
-.map-modal { padding: 8px; }
+    .map-modal { padding: 8px; }
+
+    /** Mobile map modal - full screen responsiveness */
     .map-card {
         width: calc(100vw - 16px);
         height: calc(100vh - 16px);
         max-height: none;
         border-radius: 12px;
     }
-    .map-card-header {
-        padding: 10px 12px;
-    }
-    .map-card-body {
-        height: calc(100% - 64px);
-    }
-    #map-inner {
-        padding: 8px;
-    }
 
+    .map-card-header { padding: 10px 12px; }
+    .map-card-body { height: calc(100% - 64px); }
+
+    /** Responsive SVG sizing for mobile */
+    #map-inner { padding: 8px; }
     #svg-indonesia {
         width: 950px;
         min-width: 950px;
     }
+
+    /** Compact controls for mobile */
     .map-zoom-controls {
         bottom: 8px;
         right: 8px;
         gap: 2px;
     }
+
     .map-zoom-btn {
         width: 30px;
         height: 30px;
         font-size: 14px;
     }
+
+    /** Tooltip adjustments for small screens */
     .map-tooltip {
         font-size: 11px;
         max-width: 150px;
@@ -143,28 +199,82 @@ function formatNominal($n) {
     }
 }
 
-/* TABLE BADGE */
-.badge-ekspor { background:rgba(70,128,255,.12);color:#4680FF;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
-.badge-impor  { background:rgba(245,87,108,.12);color:#f5576c;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
+/* ============================================================================
+   TABLE & BADGE STYLES
+   ============================================================================ */
 
-/* DESKRIPSI MODAL */
-.deskripsi-modal { position:fixed;inset:0;z-index:2000;display:none;place-items:center;background:rgba(0,0,0,0.5); }
-.deskripsi-modal.active { display:grid; }
+/** Badge styling for export/import categorization */
+.badge-ekspor {
+    background: rgba(70, 128, 255, 0.12);
+    color: #4680FF;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.badge-impor {
+    background: rgba(245, 87, 108, 0.12);
+    color: #f5576c;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/** Table responsive fix - only horizontal scroll, vertical flows with page */
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
+
+/* ============================================================================
+   DESCRIPTION MODAL STYLES
+   ============================================================================ */
+
+/** Description modal overlay */
+.deskripsi-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.deskripsi-modal.active { display: grid; }
+
+/** Description modal card */
 .deskripsi-card {
-    position:relative;z-index:1;
-    width:min(500px,calc(100vw - 24px));
-    background:var(--surface);
-    border-radius:12px;
-    border:1px solid var(--border);
-    box-shadow:0 12px 48px rgba(0,0,0,0.2);
-    overflow:hidden;
+    position: relative;
+    z-index: 1;
+    width: min(500px, calc(100vw - 24px));
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
+
 .deskripsi-header {
-    padding:16px 20px;
-    border-bottom:1px solid var(--border);
-    display:flex;align-items:center;justify-content:space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.deskripsi-body { padding:20px; }
+
+.deskripsi-body { padding: 20px; }
+
+/** Textarea for description input */
 .deskripsi-textarea {
     width:100%;
     min-height:150px;
@@ -184,6 +294,22 @@ function formatNominal($n) {
 }
 .deskripsi-actions {
     display:flex;gap:8px;justify-content:flex-end;margin-top:16px;
+}
+
+/* TABLE RESPONSIVE FIX */
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        max-height: none;
+        overflow-y: visible;
+    }
 }
 </style>
 
@@ -469,15 +595,25 @@ function formatNominal($n) {
 </div>
 
 <script>
-// Data peta dari PHP
+/**
+ * ============================================================================
+ * MAP MODULE - Handles map interactions and visualizations
+ * ============================================================================
+ */
+
+/** Map data from PHP backend - contains province info (type, city, count) */
 const petaData = <?= json_encode($peta) ?>;
 
-// Warnai provinsi di SVG
+/** Initialize map and tooltip on DOM ready */
 document.addEventListener('DOMContentLoaded', function() {
     colorizeMap();
     setupTooltip();
 });
 
+/**
+ * Colorize SVG provinces based on export/import type
+ * Assigns CSS classes to province paths for styling
+ */
 function colorizeMap() {
     const svg = document.querySelector('#map-container svg');
     if (!svg) return;
@@ -491,6 +627,10 @@ function colorizeMap() {
     });
 }
 
+/**
+ * Setup interactive tooltips for SVG province paths
+ * Shows province details on hover with smooth positioning
+ */
 function setupTooltip() {
     const svg = document.querySelector('#svg-indonesia');
     const tip = document.getElementById('mapTooltip');
@@ -521,23 +661,37 @@ function setupTooltip() {
     });
 }
 
+/**
+ * Open map modal with full-screen visualization
+ * Recolorizes map on open with slight delay for rendering
+ */
 function bukaMap() {
     document.getElementById('mapModal').classList.add('active');
     document.body.style.overflow = 'hidden';
     setTimeout(colorizeMap, 50);
 }
 
+/** Close map modal and restore body scroll */
 function tutupMap() {
     document.getElementById('mapModal').classList.remove('active');
     document.body.style.overflow = '';
 }
 
+/**
+ * Open map modal with specific province highlighted
+ * Dims other provinces and adds emphasis to selected one
+ *
+ * @param {string} svgId - Province SVG element ID
+ * @param {string} kota - City name (for display)
+ * @param {string} tipe - Transaction type (ekspor/impor)
+ */
 function bukaMapProvinsi(svgId, kota, tipe) {
     bukaMap();
     setTimeout(function() {
         const svg = document.querySelector('#svg-indonesia');
         if (!svg) return;
-        // Highlight provinsi yang dipilih
+
+        // Highlight selected province
         svg.querySelectorAll('path').forEach(p => p.style.opacity = '0.3');
         const target = svg.querySelector(`[id="${svgId}"]`);
         if (target) {
@@ -545,7 +699,8 @@ function bukaMapProvinsi(svgId, kota, tipe) {
             target.style.strokeWidth = '2';
             target.style.stroke = '#fff';
         }
-        // Reset setelah 3 detik
+
+        // Auto-reset highlighting after 3 seconds
         setTimeout(() => {
             svg.querySelectorAll('path').forEach(p => {
                 p.style.opacity = '';
@@ -556,12 +711,20 @@ function bukaMapProvinsi(svgId, kota, tipe) {
     }, 100);
 }
 
-// Tutup dengan Escape
+/** Close map modal with Escape key */
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') tutupMap();
 });
 
-// ========== DESKRIPSI FUNCTIONS ==========
+/**
+ * ============================================================================
+ * DESCRIPTION MODULE - Handles page-level documentation editing
+ * ============================================================================
+ */
+
+/**
+ * Open description modal and load saved content from localStorage
+ */
 function deskripsi() {
     const modal = document.getElementById('deskripsiModal');
     const textarea = document.getElementById('deskripsiText');
@@ -574,12 +737,17 @@ function deskripsi() {
     textarea.focus();
 }
 
+/** Close description modal and restore body scroll */
 function tutupDeskripsi() {
     const modal = document.getElementById('deskripsiModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
 }
 
+/**
+ * Save description to localStorage and display notification
+ * Clears localStorage if textarea is empty
+ */
 function simpanDeskripsi() {
     const textarea = document.getElementById('deskripsiText');
     const deskripsi = textarea.value.trim();
@@ -596,6 +764,13 @@ function simpanDeskripsi() {
     tutupDeskripsi();
 }
 
+/**
+ * Display temporary notification toast at top-right corner
+ * Auto-dismisses after 2.5 seconds with slide animation
+ *
+ * @param {string} message - Notification message text
+ * @param {string} type - Notification type: 'success', 'error', or 'info'
+ */
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -619,7 +794,7 @@ function showNotification(message, type = 'success') {
     }, 2500);
 }
 
-// CSS untuk animasi
+/** Inject CSS animations for notification toast */
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
@@ -633,7 +808,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Tutup modal deskripsi dengan Escape
+/** Close description modal with Escape key */
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         const modal = document.getElementById('deskripsiModal');
