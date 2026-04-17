@@ -1,14 +1,40 @@
 <?= view('layout/header') ?>
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>
+<style>
+/* ===== PRODUK PAGE MOBILE ===== */
+@media (max-width: 768px) {
+    .card-header { padding: 12px !important; }
+    .card-header .d-flex { gap: 8px; flex-wrap: wrap; }
+    .form-select { font-size: 13px; }
+}
+
+@media (max-width: 576px) {
+    .card-header .d-flex { flex-direction: column; align-items: flex-start; }
+    .card-header .form-select { width: 100%; margin-top: 8px; }
+    .input-group { flex-wrap: wrap; }
+    .input-group > * { flex: 1 1 100%; }
+    .badge { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+    .table { font-size: 11px; }
+    .table th { font-size: 9px; padding: 6px 4px !important; }
+    .table td { padding: 6px 4px !important; }
+    .ps-4 { padding-left: 8px !important; }
+    .pe-4 { padding-right: 8px !important; }
+    .d-flex.gap-2 { gap: 4px !important; }
+    .badge.rounded-circle { width: 28px !important; height: 28px !important; }
+}
+</style>
 <div class="pc-container">
     <div class="pc-content">
 
         <!-- Page Header -->
         <div class="mb-4 pb-2">
-            <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <div>
-                    <h4 class="fw-bold text-dark mb-2"><i class="bi bi-box2-fill"></i> Data Produk</h4>
+                    <h4 class="fw-bold mb-2" style="color: var(--text-strong)"><i class="bi bi-box2-fill"></i> Data Produk</h4>
                     <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '→';">
                         <ol class="breadcrumb breadcrumb-dots small mb-0">
                             <li class="breadcrumb-item"><a href="/dashboard" class="text-decoration-none">Dashboard</a></li>
@@ -24,6 +50,13 @@
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
                 <form method="GET" action="/produk">
+                    <!--
+                        Sinkronisasi state filter:
+                        - Form search hanya mengubah keyword `search`.
+                        - Nilai `tipe` dipertahankan via hidden input agar filter kategori
+                          tidak hilang ketika user melakukan pencarian teks.
+                    -->
+                    <input type="hidden" name="tipe" value="<?= esc($filter_tipe ?? 'semua') ?>">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0">
                             <i class="bi bi-search text-muted"></i>
@@ -45,6 +78,8 @@
         <!-- Stat Cards -->
         <div class="row g-3 mb-4">
             <?php
+                // Catatan: statistik dihitung dari `$product` (hasil filter aktif),
+                // sehingga angka kartu mengikuti kondisi filter saat ini.
                 $categories = array_unique(array_column($product, 'category'));
                 $statCards  = [
                     ['label' => 'Total Produk', 'icon' => 'bi-box2', 'gradient' => 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 'count' => count($product)],
@@ -77,7 +112,25 @@
                     <h6 class="mb-0 fw-semibold text-dark"><i class="bi bi-table text-info"></i> Daftar Produk</h6>
                     <small class="text-muted d-block">Informasi lengkap produk yang tersedia</small>
                 </div>
-                <span class="badge bg-primary">
+                <form method="GET" action="/produk" class="d-flex align-items-center gap-2">
+                    <!-- Pertahankan keyword search saat user mengganti kategori -->
+                    <input type="hidden" name="search" value="<?= esc($search ?? '') ?>">
+                    <label for="filterTipeProduk" class="small fw-semibold mb-0">Kategori</label>
+                    <!--
+                        Dropdown kategori:
+                        - Sumber opsi: `$category` dari controller (data master kategori).
+                        - onchange submit agar UX cepat tanpa tombol tambahan.
+                    -->
+                    <select id="filterTipeProduk" name="tipe" class="form-select form-select-sm" style="min-width: 180px;" onchange="this.form.submit()">
+                        <option value="semua" <?= (strtolower($filter_tipe ?? 'semua') === 'semua') ? 'selected' : '' ?>>Semua</option>
+                        <?php foreach (($category ?? []) as $catOption): ?>
+                            <option value="<?= esc($catOption) ?>" <?= (strcasecmp((string)($filter_tipe ?? 'semua'), (string)$catOption) === 0) ? 'selected' : '' ?>>
+                                <?= esc($catOption) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+                <span class="badge bg-primary gap-3">
                     <?= count($product) ?> produk
                 </span>
             </div>
@@ -110,6 +163,9 @@
                                 </tr>
                             <?php else: ?>
                                 <?php
+                                    // Mapping kategori ke ikon/warna visual.
+                                    // Jika kategori baru ditambahkan di controller/data source,
+                                    // tambahkan mapping di sini agar tampilan tetap konsisten.
                                     $categoryMap = [
                                         'Smartphone' => ['icon' => 'bi-phone', 'color' => '#667eea'],
                                         'Laptop'     => ['icon' => 'bi-laptop',  'color' => '#28a745'],
@@ -163,6 +219,14 @@
 
 <script>
 (function() {
+    /**
+     * Client-side pagination helper (no server calls).
+     *
+     * Contract HTML:
+     * - `tbodyId` menunjuk elemen <tbody>.
+     * - Baris yang dipaginate wajib memiliki atribut `data-row`.
+     * - `pagId` adalah container tombol pagination.
+     */
     function paginate(tbodyId, pagId, perPage) {
         var tbody = document.getElementById(tbodyId);
         if (!tbody) return;
@@ -212,6 +276,12 @@
 })();
 </script>
 
-<script>document.addEventListener("DOMContentLoaded",function(){ window._paginate("tbody-produk","pag-produk",10); });</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Standar page size modul tabel: mobile 5, desktop 8.
+        var perPage = window.innerWidth < 768 ? 5 : 8;
+        window._paginate("tbody-produk", "pag-produk", perPage);
+    });
+</script>
 
 <?= view('layout/footer') ?>

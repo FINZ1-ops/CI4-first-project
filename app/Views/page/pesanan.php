@@ -11,6 +11,34 @@ function formatNominalPHP($n) {
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>
 
+<style>
+/* ===== PESANAN PAGE MOBILE ===== */
+@media (max-width: 768px) {
+    .row.g-3 { --bs-gutter-y: 12px; }
+    .card-body { padding: 12px !important; }
+    .form-label { font-size: 12px; }
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 { flex: 0 0 100%; max-width: 100%; }
+    .form-control-sm { font-size: 12px; }
+    .table { font-size: 12px; }
+    .table th { font-size: 10px; padding: 6px 4px !important; }
+    .table td { padding: 6px 4px !important; }
+    .badge { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+    .table { font-size: 11px; }
+    .table th { font-size: 9px; padding: 4px 2px !important; }
+    .table td { padding: 4px 2px !important; font-size: 10px; }
+    .ps-4 { padding-left: 6px !important; }
+    .d-flex.gap-2 { gap: 4px !important; }
+    .badge { padding: 2px 6px; }
+    .badge.rounded-circle { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
+}
+</style>
+
 <div class="pc-container">
     <div class="pc-content">
     

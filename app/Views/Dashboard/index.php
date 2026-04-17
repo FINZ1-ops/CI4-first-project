@@ -12,11 +12,28 @@
     .chart-wrap { height: 220px !important; }
     .donut-wrap { height: 180px !important; }
     .hide-mobile { display: none !important; }
+    .stat-card .mb-0 { line-height: 1.1 !important; }
 }
+
 @media (max-width: 768px) {
     .chart-wrap { height: 250px; }
     .donut-wrap { height: 200px; }
+    .table { font-size: 13px; }
+    .table th, .table td { padding: 8px !important; font-size: 12px; }
 }
+
+@media (max-width: 480px) {
+    .stat-card .card-body { padding: 10px !important; }
+    .stat-value { font-size: 18px !important; }
+    .stat-badge-text { font-size: 10px !important; }
+    .stat-bg-icon { font-size: 48px !important; }
+    .chart-wrap { height: 180px !important; }
+    .donut-wrap { height: 150px !important; }
+    .legend-box { padding: 6px 10px !important; font-size: 12px; }
+    .pagination { margin-bottom: 8px; }
+    .pagination-sm .page-link { padding: 0.25rem 0.5rem; font-size: 11px; }
+}
+
 .chart-wrap { position: relative; height: 300px; }
 .donut-wrap { position: relative; height: 280px; }
 

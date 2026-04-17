@@ -2,6 +2,32 @@
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>
 
+<style>
+/* ===== PENJUALAN MOBILE ===== */
+@media (max-width: 768px) {
+    .card-body { padding: 12px !important; }
+    .form-label { font-size: 12px; }
+    .row.g-3 { --bs-gutter-y: 12px; }
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 { flex: 0 0 100%; max-width: 100%; }
+    .form-control-sm { font-size: 12px; }
+    .table { font-size: 12px; }
+    .table th { font-size: 10px; padding: 6px 4px !important; }
+    .table td { padding: 6px 4px !important; }
+    .badge { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+    .table { font-size: 11px; }
+    .table th { font-size: 9px; padding: 4px 2px !important; }
+    .table td { padding: 4px 2px !important; }
+    .ps-4 { padding-left: 6px !important; }
+    .badge { padding: 2px 6px; }
+}
+</style>
+
 <div class="pc-container">
     <div class="pc-content">
         <!-- Page Header -->

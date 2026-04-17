@@ -143,6 +143,40 @@ function formatNominal($n) {
     }
 }
 
+@media (max-width: 480px) {
+    .map-modal { padding: 6px; }
+    .map-card {
+        width: calc(100vw - 12px);
+        height: calc(100vh - 12px);
+        border-radius: 8px;
+    }
+    .map-card-header {
+        padding: 8px 10px;
+        gap: 4px;
+    }
+    .map-card-header h6 {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    #svg-indonesia {
+        width: 800px;
+        min-width: 800px;
+    }
+    .map-zoom-controls {
+        bottom: 6px;
+        right: 6px;
+    }
+    .map-zoom-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    .btn-close {
+        width: 28px;
+        height: 28px;
+    }
+}
+
 /* TABLE BADGE */
 .badge-ekspor { background:rgba(70,128,255,.12);color:#4680FF;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
 .badge-impor  { background:rgba(245,87,108,.12);color:#f5576c;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
@@ -199,6 +233,30 @@ function formatNominal($n) {
         max-height: 360px;
         overflow-y: auto;
     }
+}
+
+/* ===== LOKASI MOBILE ===== */
+@media (max-width: 768px) {
+    .card-body { padding: 12px !important; }
+    .form-label { font-size: 12px; }
+    .row.g-3 { --bs-gutter-y: 12px; }
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 { flex: 0 0 100%; max-width: 100%; }
+    .form-control-sm { font-size: 12px; }
+    .table { font-size: 12px; }
+    .table th { font-size: 10px; padding: 6px 4px !important; }
+    .table td { padding: 6px 4px !important; }
+    .badge { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+    .table { font-size: 11px; }
+    .table th { font-size: 9px; padding: 4px 2px !important; }
+    .table td { padding: 4px 2px !important; }
+    .ps-4 { padding-left: 6px !important; }
+    .badge { padding: 2px 6px; }
 }
 </style>
 
@@ -300,7 +358,7 @@ function formatNominal($n) {
                 </div>
             </div>
         </div>
-
+    
         <!-- Filter -->
         <div class="card mb-4">
             <div class="card-body">

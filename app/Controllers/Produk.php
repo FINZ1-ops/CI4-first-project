@@ -6,7 +6,20 @@ class Produk extends BaseController
 {
     public function index()
     {
-    $search = $this->request->getGet('search');
+    /**
+     * Query contract (GET):
+     * - search: keyword untuk nama produk / kategori
+     * - tipe  : kategori produk (contoh: "Laptop"), default "semua"
+     *
+     * Catatan maintenance:
+     * - Gunakan nilai "semua" sebagai sentinel agar controller dan view konsisten.
+     * - Normalisasi input dengan trim untuk mencegah spasi kosong dianggap valid filter.
+     */
+    $search = trim((string) $this->request->getGet('search'));
+    $filterTipe = trim((string) $this->request->getGet('tipe'));
+    if ($filterTipe === '') {
+        $filterTipe = 'semua';
+    }
 
        $semua =[
             ['name_product' => 'Samsung Galaxy S24','category' => 'Smartphone', 'price' => 10999000],
@@ -43,20 +56,43 @@ class Produk extends BaseController
             ['name_product' => 'Microsoft Xbox Series X', 'category' => 'Gaming Console', 'price' => 7999000],
        ];
 
-       if ($search){
-         $product = array_filter($semua, function($p) use ($search) {
-            return stripos($p['name_product'],$search) !== false || stripos($p['category'],$search) !== false;
-        });
-       } else {
-        $product = $semua;
-
+       /**
+        * Pipeline filter:
+        * 1) Filter teks (search)
+        * 2) Filter kategori (tipe)
+        *
+        * Urutan ini sengaja dipertahankan agar kombinasi search + kategori
+        * menghasilkan subset data yang konsisten.
+        */
+       $product = $semua;
+       if ($search !== '') {
+            $product = array_filter($product, function($p) use ($search) {
+                return stripos($p['name_product'], $search) !== false || stripos($p['category'], $search) !== false;
+            });
        }
 
+       // 2) Filter kategori (tipe)
+       if (strtolower($filterTipe) !== 'semua') {
+            $product = array_filter($product, function($p) use ($filterTipe) {
+                return strcasecmp($p['category'], $filterTipe) === 0;
+            });
+       }
+
+       /**
+        * Dropdown kategori harus selalu memakai data master (`$semua`),
+        * bukan hasil filter (`$product`), supaya opsi kategori tidak hilang
+        * saat user sedang melakukan pencarian/penyaringan.
+        */
+       $categories = array_values(array_unique(array_column($semua, 'category')));
+       sort($categories);
+
+       // Payload ke view: data hasil filter + state filter untuk render ulang UI.
        $data = [
         'title'=>'Data Produk',
         'product' => $product,
-        'category' => array_unique(array_column($product, 'category')),
+        'category' => $categories,
         'search' => $search,
+        'filter_tipe' => $filterTipe,
        ];
 
        return view('page/produk', $data);

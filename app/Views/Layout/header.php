@@ -348,7 +348,7 @@
             body.sidebar-open .sidebar-overlay { display: block; }
 
             /* Perkecil padding konten di mobile */
-            .pc-content { padding: 16px; }
+            .pc-content { padding: 12px; }
 
             /* Tabel scroll horizontal */
             .table-responsive { -webkit-overflow-scrolling: touch; }
@@ -359,6 +359,20 @@
 
             /* Dropdown notification full width */
             .dropdown-notification { width: calc(100vw - 32px); }
+
+            /* Page header responsive */
+            .page-header { margin-bottom: 16px; }
+            .page-header h5 { font-size: 18px; }
+
+            /* Stat cards better spacing */
+            .row.g-3 { --bs-gutter-y: 12px; }
+
+            /* Form responsive */
+            .input-group { flex-wrap: wrap; }
+            .input-group-text, .form-control, .btn { flex: 1 1 auto; min-width: 100px; }
+
+            /* D-flex with wrap for header controls */
+            .d-flex.align-items-center.justify-content-between { flex-wrap: wrap; }
         }
 
         /* ===== POLISH ===== */
@@ -427,6 +441,21 @@
             background-image: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, transparent 100%);
         }
 
+        /* ===== PAGINATION RESPONSIVE ===== */
+        .pagination { flex-wrap: wrap; gap: 2px; }
+        .pagination-sm .page-link { padding: 0.375rem 0.75rem; font-size: 12px; }
+        .pagination-sm .page-item { margin: 0; }
+
+        @media (max-width: 576px) {
+            .pagination-sm .page-link { padding: 0.25rem 0.5rem; font-size: 11px; }
+            .pagination-sm { font-size: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .pagination-sm .page-link { padding: 0.2rem 0.4rem; font-size: 10px; }
+            .pagination { gap: 1px; }
+        }
+
         /* Breadcrumb separator */
         .breadcrumb-item + .breadcrumb-item::before {
             content: "›";
@@ -442,6 +471,43 @@
 
         html.theme-dark .dropdown-menu {
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        /* ===== EXTRA SMALL DEVICES (< 480px) ===== */
+        @media (max-width: 480px) {
+            :root { --header-height: 60px; --sidebar-width: 240px; }
+            .pc-content { padding: 10px !important; }
+            .mb-4 { margin-bottom: 12px !important; }
+            .page-header h5 { font-size: 16px; font-weight: 700; }
+            .card-body { padding: 12px !important; }
+            .card-header { padding: 10px 12px !important; }
+            .card-footer { padding: 8px 12px !important; }
+            .table { font-size: 12px; }
+            .table th { font-size: 10px; }
+            .stat-card .card-body { padding: 12px !important; }
+            .stat-value { font-size: 18px !important; }
+            .badge { font-size: 10px; padding: 3px 8px; }
+            .btn-sm { padding: 4px 8px; font-size: 12px; }
+            .input-group { flex-direction: column; }
+            .input-group > * { width: 100% !important; margin-bottom: 6px; }
+            .input-group > *:last-child { margin-bottom: 0; }
+            .d-flex.align-items-center.justify-content-between { gap: 8px; }
+            .row.g-3 { --bs-gutter-x: 8px; --bs-gutter-y: 8px; }
+            .col-sm-6 { flex: 0 0 100%; max-width: 100%; }
+            .hide-mobile { display: none !important; }
+            /* Page header stacking */
+            .page-header .d-flex.align-items-center.justify-content-between { flex-direction: column; align-items: flex-start; }
+            .page-header .d-flex.align-items-center.justify-content-between > span { align-self: flex-start; margin-top: 8px; }
+        }
+
+        /* ===== RESPONSIVE UTILITIES ===== */
+        /* Ensure flex containers wrap properly on mobile */
+        .responsive-flex { display: flex; flex-wrap: wrap; gap: 8px; }
+        .responsive-flex > * { flex: 1 1 auto; min-width: 150px; }
+
+        @media (max-width: 576px) {
+            .responsive-flex { gap: 6px; }
+            .responsive-flex > * { min-width: 100%; }
         }
 
         .settings-panel { position: fixed; inset: 0; z-index: 1100; display: grid; place-items: center; }
