@@ -177,6 +177,7 @@
                     </table>
                 </div>
             </div>
+            <div class="card-footer bg-white border-top-0 d-flex align-items-center flex-wrap gap-2 py-3" id="pag-penjualan"></div>
         </div>
 
     </div>
@@ -342,6 +343,10 @@
         `).join('');
     }
 
+    // Simpan pilihan periode untuk tabel produk, supaya saat window resize
+    // kita bisa merender ulang dengan per-page yang sesuai (5/8).
+    var currentTabelPeriode = 'minggu';
+
     function tampilkanTabelProduk(periode) {
         const d = periode === 'minggu' ? produk_minggu : periode === 'bulan' ? produk_bulan : produk_tahun;
 
@@ -353,34 +358,48 @@
         const colors = ['#667eea', '#f093fb', '#4facfe', '#fa709a', '#fdbb2d', '#fd7e14', '#e83e8c', '#20c997', '#6f42c1', '#17a2b8'];
         const maxRevenue = Math.max(...d.map(p => p.pendapatan));
 
-        document.getElementById('produkTable').innerHTML = d.map((p, i) => {
-            const percentage = (p.pendapatan / maxRevenue) * 100;
-            return `
-                <tr>
-                    <td class="ps-4">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-circle" style="background-color: ${colors[i]}; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 10px;">${i+1}</span>
-                            <span class="fw-500">${p.nama || 'N/A'}</span>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <span class="badge bg-light text-dark">${p.terjual || 0} unit</span>
-                    </td>
-                    <td class="text-end">
-                        <span class="fw-semibold text-success">${formatNominal(p.pendapatan || 0)}</span>
-                    </td>
-                    <td>
-                        <div class="progress" style="height: 5px;">
-                            <div class="progress-bar" style="background-color: ${colors[i]}; width: ${percentage}%"></div>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        }).join('');
+        // Pagination for table "Detail Penjualan Produk".
+        // per-page dipilih dari viewport width saat tabel dirender.
+        var _pjData = d;
+        var _pjPer = window.innerWidth < 768 ? 5 : 8;
+        function renderPJ(page) {
+            var tot = _pjData.length;
+            var totPg = Math.ceil(tot / _pjPer);
+            var cur = Math.max(1, Math.min(page, totPg));
+            var slice = _pjData.slice((cur-1)*_pjPer, cur*_pjPer);
+            const maxRevenue = Math.max(..._pjData.map(p => p.pendapatan));
+            const colors = ['#667eea','#f093fb','#4facfe','#fa709a','#fdbb2d','#fd7e14','#e83e8c','#20c997','#6f42c1','#17a2b8'];
+            document.getElementById('produkTable').innerHTML = slice.map((p, i) => {
+                const gi = (cur-1)*_pjPer + i;
+                const pct = (p.pendapatan / maxRevenue) * 100;
+                return `<tr>
+                    <td class="ps-4"><div class="d-flex align-items-center gap-2">
+                        <span class="badge rounded-circle" style="background-color:${colors[gi%colors.length]};width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:10px">${gi+1}</span>
+                        <span class="fw-500">${p.nama||'N/A'}</span></div></td>
+                    <td class="text-center"><span class="badge bg-light text-dark">${p.terjual||0} unit</span></td>
+                    <td class="text-end"><span class="fw-semibold text-success">${formatNominal(p.pendapatan||0)}</span></td>
+                    <td><div class="progress" style="height:5px"><div class="progress-bar" style="background-color:${colors[gi%colors.length]};width:${pct}%"></div></div></td>
+                </tr>`;
+            }).join('');
+            var el = document.getElementById('pag-penjualan');
+            if (!el) return;
+            if (totPg <= 1) { el.innerHTML=''; return; }
+            var from=(cur-1)*_pjPer+1, to=Math.min(cur*_pjPer,tot), btns='';
+            btns+='<li class="page-item'+(cur===1?' disabled':'')+'"><a class="page-link pjp" href="#" data-p="'+(cur-1)+'">&laquo;</a></li>';
+            for(var pg=1;pg<=totPg;pg++){
+                if(pg===1||pg===totPg||(pg>=cur-1&&pg<=cur+1)) btns+='<li class="page-item'+(pg===cur?' active':'')+'"><a class="page-link pjp" href="#" data-p="'+pg+'">'+pg+'</a></li>';
+                else if(pg===cur-2||pg===cur+2) btns+='<li class="page-item disabled"><span class="page-link">…</span></li>';
+            }
+            btns+='<li class="page-item'+(cur===totPg?' disabled':'')+'"><a class="page-link pjp" href="#" data-p="'+(cur+1)+'">&raquo;</a></li>';
+            el.innerHTML='<nav><ul class="pagination pagination-sm mb-0">'+btns+'</ul></nav><small class="text-muted ms-3">Menampilkan '+from+'–'+to+' dari '+tot+'</small>';
+            el.querySelectorAll('a.pjp').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();renderPJ(parseInt(this.getAttribute('data-p')));});});
+        }
+        renderPJ(1);
     }
 
     function gantiTabelPeriode(e) {
         const periode = e.target.value;
+        currentTabelPeriode = periode;
         tampilkanTabelProduk(periode);
         tampilkanTerlaris(periode);
     }
@@ -389,12 +408,15 @@
         initChart();
         tampilkanTerlaris('minggu');
         tampilkanTabelProduk('minggu');
+        currentTabelPeriode = 'minggu';
     });
 
     window.addEventListener('resize', function() {
         if (chartInstance) {
             chartInstance.resize();
         }
+        // Reset halaman ke 1, agar per-page (5/8) sesuai lebar layar saat ini.
+        tampilkanTabelProduk(currentTabelPeriode);
     });
 </script>
 

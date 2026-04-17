@@ -22,6 +22,14 @@
 
 /* Legend warna ikut tema */
 .legend-box { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; }
+
+/* Sticky thead untuk tabel scrollable */
+.table-responsive thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--bg, #f8f9fa);
+}
 </style>
 
 <div class="pc-container">
@@ -248,7 +256,7 @@
                                         <th style="color:var(--text-muted);font-size:11px">STATUS</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody-dashboard">
                                     <?php
                                     $orders = [
                                         ['id'=>'#021','name'=>'Andi S','bg'=>'4680FF','produk'=>'iPhone 15','total'=>'Rp 8.5M','status'=>'Selesai','sc'=>'success','color'=>'#28a745'],
@@ -264,7 +272,7 @@
                                     ];
                                     foreach($orders as $o):
                                     ?>
-                                    <tr>
+                                    <tr data-row="1">
                                         <td class="ps-3">
                                             <span class="badge bg-secondary text-white" style="background:var(--accent-soft);color:var(--accent);font-size:11px">
                                                 <?= $o['id'] ?>
@@ -294,6 +302,7 @@
                             </table>
                         </div>
                     </div>
+                    <div class="card-footer bg-white border-top-0 d-flex align-items-center flex-wrap gap-2 py-2" id="pag-dashboard"></div>
                 </div>
             </div>
 
@@ -447,5 +456,37 @@ window.addEventListener('resize', function() {
     resizeTimer = setTimeout(function() { buildSales(); buildDonut(); }, 200);
 });
 </script>
+
+<script>
+(function() {
+    function paginate(tbodyId, pagId, perPage) {
+        var tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        var rows = Array.from(tbody.querySelectorAll('tr[data-row]'));
+        var total = rows.length; var totalPages = Math.ceil(total / perPage); var cur = 1;
+        function show(page) {
+            cur = Math.max(1, Math.min(page, totalPages));
+            rows.forEach(function(r,i){ r.style.display=(i>=(cur-1)*perPage&&i<cur*perPage)?'':'none'; });
+            render();
+        }
+        function render() {
+            var el = document.getElementById(pagId); if (!el) return;
+            if (totalPages <= 1) { el.innerHTML=''; return; }
+            var from=(cur-1)*perPage+1, to=Math.min(cur*perPage,total), btns='';
+            btns+='<li class="page-item'+(cur===1?' disabled':'')+'"><a class="page-link" href="#" data-p="'+(cur-1)+'">&laquo;</a></li>';
+            for (var p=1;p<=totalPages;p++) {
+                if (p===1||p===totalPages||(p>=cur-1&&p<=cur+1)) btns+='<li class="page-item'+(p===cur?' active':'')+'"><a class="page-link" href="#" data-p="'+p+'">'+p+'</a></li>';
+                else if (p===cur-2||p===cur+2) btns+='<li class="page-item disabled"><span class="page-link">…</span></li>';
+            }
+            btns+='<li class="page-item'+(cur===totalPages?' disabled':'')+'"><a class="page-link" href="#" data-p="'+(cur+1)+'">&raquo;</a></li>';
+            el.innerHTML='<nav><ul class="pagination pagination-sm mb-0">'+btns+'</ul></nav><small class="text-muted ms-3">'+from+'–'+to+' dari '+total+'</small>';
+            el.querySelectorAll('a.page-link').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); var pg=parseInt(this.getAttribute('data-p')); if(!isNaN(pg)) show(pg); }); });
+        }
+        show(1);
+    }
+    window._paginate = paginate;
+})();
+</script>
+<script>document.addEventListener('DOMContentLoaded',function(){window._paginate('tbody-dashboard','pag-dashboard',5);});</script>
 
 <?= view('layout/footer') ?>

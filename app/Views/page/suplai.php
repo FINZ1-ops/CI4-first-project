@@ -167,9 +167,9 @@
                                 <th class="fw-semibold text-uppercase small text-end pe-4"><i class="bi bi-cash-coin"></i> Subtotal</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-suplai">
                             <?php if (empty($suplai)): ?>
-                                <tr>
+                                <tr data-row="1">
                                     <td colspan="6" class="text-center py-5">
                                         <i class="bi bi-inbox" style="font-size:48px;opacity:.2"></i>
                                         <p class="mt-3 text-muted">Tidak ada data suplai ditemukan</p>
@@ -177,7 +177,7 @@
                                 </tr>
                             <?php else: ?>
                                 <?php $no = 1; foreach ($suplai as $s): ?>
-                                <tr>
+                                <tr data-row="1">
                                     <td class="ps-4">
                                         <span class="badge bg-light text-dark"><?= $no++ ?></span>
                                     </td>
@@ -218,6 +218,8 @@
                         <?php endif; ?>
                     </table>
                 </div>
+                <!-- Pagination controls -->
+                <div class="px-3 pb-3" id="pag-suplai"></div>
             </div>
         </div>
 
@@ -283,5 +285,71 @@
     .modal-overlay { display: none; }
     .modal-overlay:not(.d-none) { display: grid; }
 </style>
+
+<script>
+(function() {
+    /**
+     * Client-side pagination helper (no server calls).
+     *
+     * Contract HTML:
+     * - `tbodyId` is a <tbody> element.
+     * - Each row that must be paginated must have attribute `data-row`.
+     * - Pagination buttons are rendered inside element `pagId`.
+     *
+     * Notes:
+     * - `perPage` is computed on initial page load.
+     */
+    function paginate(tbodyId, pagId, perPage) {
+        var tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        var rows = Array.from(tbody.querySelectorAll('tr[data-row]'));
+        var total = rows.length;
+        var totalPages = Math.ceil(total / perPage);
+        var cur = 1;
+        function show(page) {
+            cur = Math.max(1, Math.min(page, totalPages));
+            rows.forEach(function(r, i) {
+                r.style.display = (i >= (cur-1)*perPage && i < cur*perPage) ? '' : 'none';
+            });
+            render();
+        }
+        function render() {
+            var el = document.getElementById(pagId);
+            if (!el) return;
+            if (totalPages <= 1) { el.innerHTML = ''; return; }
+            var from = (cur-1)*perPage + 1;
+            var to = Math.min(cur*perPage, total);
+            var btns = '';
+            btns += '<li class="page-item' + (cur===1?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur-1) + '">&laquo;</a></li>';
+            for (var p = 1; p <= totalPages; p++) {
+                if (p === 1 || p === totalPages || (p >= cur-1 && p <= cur+1)) {
+                    btns += '<li class="page-item' + (p===cur?' active':'') + '"><a class="page-link" href="#" data-p="' + p + '">' + p + '</a></li>';
+                } else if (p === cur-2 || p === cur+2) {
+                    btns += '<li class="page-item disabled"><span class="page-link">…</span></li>';
+                }
+            }
+            btns += '<li class="page-item' + (cur===totalPages?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur+1) + '">&raquo;</a></li>';
+            el.innerHTML = '<nav><ul class="pagination pagination-sm mb-0">' + btns + '</ul></nav>' +
+                '<small class="text-muted ms-3">Menampilkan ' + from + '–' + to + ' dari ' + total + '</small>';
+            el.querySelectorAll('a.page-link').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var pg = parseInt(this.getAttribute('data-p'));
+                    if (!isNaN(pg)) show(pg);
+                });
+            });
+        }
+        show(1);
+    }
+    window._paginate = paginate;
+})();
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 5-8 baris per halaman: mobile 5, desktop 8
+        var perPage = window.innerWidth < 768 ? 5 : 8;
+        window._paginate("tbody-suplai", "pag-suplai", perPage);
+    });
+</script>
 
 <?= view('layout/footer') ?>

@@ -3,13 +3,6 @@
 <?= view('layout/topbar') ?>
 
 <?php
-/**
- * Format nominal value to Rupiah currency with abbreviation
- * Converts large numbers to T (trillion), M (million), JT (juta), K (thousand)
- *
- * @param int $n The numeric value to format
- * @return string Formatted currency string (e.g., "Rp 1.2M")
- */
 function formatNominal($n) {
     if ($n >= 1000000000000) {
         return 'Rp ' . number_format($n / 1000000000000, 1, ',', '.') . 'T';
@@ -25,31 +18,9 @@ function formatNominal($n) {
 ?>
 
 <style>
-/* ============================================================================
-   MAP MODAL STYLES
-   ============================================================================ */
-
-/** Map modal overlay - fixed positioning covering entire viewport */
-.map-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: none;
-    place-items: center;
-    padding: 12px;
-}
-
+.map-modal { position: fixed; inset: 0; z-index: 2000; display: none; place-items: center; padding: 12px; }
 .map-modal.active { display: grid; }
-
-/** Semi-transparent backdrop with blur effect */
-.map-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-}
-
-/** Map modal card container */
+.map-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
 .map-card {
     position: relative;
     z-index: 1;
@@ -58,12 +29,11 @@ function formatNominal($n) {
     background: var(--surface);
     border-radius: 16px;
     border: 1px solid var(--border);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
-
 .map-card-header {
     padding: 12px 16px;
     border-bottom: 1px solid var(--border);
@@ -74,19 +44,13 @@ function formatNominal($n) {
     flex-wrap: wrap;
     flex-shrink: 0;
 }
-
 .map-card-body {
     flex: 1;
     min-height: 0;
     position: relative;
     overflow: hidden;
 }
-
-/* ============================================================================
-   SCROLLABLE MAP CONTAINER
-   ============================================================================ */
-
-/** Map container with smooth scrolling and grab cursor */
+/* SCROLLABLE MAP AREA */
 #map-container {
     width: 100%;
     height: 100%;
@@ -95,10 +59,8 @@ function formatNominal($n) {
     cursor: grab;
     touch-action: pan-x pan-y;
 }
-
 #map-container:active { cursor: grabbing; }
-
-/** SVG wrapper for zoom transforms and positioning */
+/* IMPORTANT: jangan dipaksa center terus, biarkan natural + scroll */
 #map-inner {
     width: max-content;
     min-width: 100%;
@@ -107,16 +69,12 @@ function formatNominal($n) {
     transform-origin: top left;
     transition: transform 0.1s;
 }
-
-/** Indonesian SVG map with responsive sizing */
 #svg-indonesia {
     display: block;
-    width: 1100px;
-    max-width: none;
+    width: 1100px;   /* desktop baseline */
+    max-width: none; /* supaya tidak ketekan parent */
     height: auto;
 }
-
-/** Styling for individual province paths */
 #svg-indonesia path {
     fill: var(--bg);
     stroke: var(--border);
@@ -124,74 +82,60 @@ function formatNominal($n) {
     cursor: pointer;
     transition: fill 0.2s, opacity 0.2s;
 }
-
 #svg-indonesia path:hover { opacity: 0.8; }
-
-/** Export and import province styling */
 #svg-indonesia path.ekspor { fill: #4680FF; }
-#svg-indonesia path.impor { fill: #f5576c; }
+#svg-indonesia path.impor  { fill: #f5576c; }
 #svg-indonesia path.ekspor:hover { fill: #2d5fc4; }
-#svg-indonesia path.impor:hover { fill: #c72d44; }
+#svg-indonesia path.impor:hover  { fill: #c72d44; }
 
-/* ============================================================================
-   TOOLTIP STYLES
-   ============================================================================ */
-
-/** Hover tooltip showing province details */
+/* MAP TOOLTIP */
 .map-tooltip {
-    position: fixed;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: var(--text-strong);
-    pointer-events: none;
-    z-index: 3000;
-    display: none;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    max-width: 180px;
+    position:fixed;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:12px;
+    color:var(--text-strong);
+    pointer-events:none;
+    z-index:3000;
+    display:none;
+    box-shadow:0 4px 16px rgba(0,0,0,0.15);
+    max-width:180px;
 }
 
-/* ============================================================================
-   MOBILE RESPONSIVE STYLES (max-width: 576px)
-   ============================================================================ */
-
 @media (max-width: 576px) {
-    .map-modal { padding: 8px; }
-
-    /** Mobile map modal - full screen responsiveness */
+.map-modal { padding: 8px; }
     .map-card {
         width: calc(100vw - 16px);
         height: calc(100vh - 16px);
         max-height: none;
         border-radius: 12px;
     }
+    .map-card-header {
+        padding: 10px 12px;
+    }
+    .map-card-body {
+        height: calc(100% - 64px);
+    }
+    #map-inner {
+        padding: 8px;
+    }
 
-    .map-card-header { padding: 10px 12px; }
-    .map-card-body { height: calc(100% - 64px); }
-
-    /** Responsive SVG sizing for mobile */
-    #map-inner { padding: 8px; }
     #svg-indonesia {
         width: 950px;
         min-width: 950px;
     }
-
-    /** Compact controls for mobile */
     .map-zoom-controls {
         bottom: 8px;
         right: 8px;
         gap: 2px;
     }
-
     .map-zoom-btn {
         width: 30px;
         height: 30px;
         font-size: 14px;
     }
-
-    /** Tooltip adjustments for small screens */
     .map-tooltip {
         font-size: 11px;
         max-width: 150px;
@@ -199,82 +143,28 @@ function formatNominal($n) {
     }
 }
 
-/* ============================================================================
-   TABLE & BADGE STYLES
-   ============================================================================ */
+/* TABLE BADGE */
+.badge-ekspor { background:rgba(70,128,255,.12);color:#4680FF;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
+.badge-impor  { background:rgba(245,87,108,.12);color:#f5576c;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600; }
 
-/** Badge styling for export/import categorization */
-.badge-ekspor {
-    background: rgba(70, 128, 255, 0.12);
-    color: #4680FF;
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-}
-
-.badge-impor {
-    background: rgba(245, 87, 108, 0.12);
-    color: #f5576c;
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-}
-
-/** Table responsive fix - only horizontal scroll, vertical flows with page */
-.table-responsive {
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-}
-
-@media (max-width: 768px) {
-    .table-responsive {
-        max-height: none;
-        overflow-y: visible;
-    }
-}
-
-/* ============================================================================
-   DESCRIPTION MODAL STYLES
-   ============================================================================ */
-
-/** Description modal overlay */
-.deskripsi-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: none;
-    place-items: center;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.deskripsi-modal.active { display: grid; }
-
-/** Description modal card */
+/* DESKRIPSI MODAL */
+.deskripsi-modal { position:fixed;inset:0;z-index:2000;display:none;place-items:center;background:rgba(0,0,0,0.5); }
+.deskripsi-modal.active { display:grid; }
 .deskripsi-card {
-    position: relative;
-    z-index: 1;
-    width: min(500px, calc(100vw - 24px));
-    background: var(--surface);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    position:relative;z-index:1;
+    width:min(500px,calc(100vw - 24px));
+    background:var(--surface);
+    border-radius:12px;
+    border:1px solid var(--border);
+    box-shadow:0 12px 48px rgba(0,0,0,0.2);
+    overflow:hidden;
 }
-
 .deskripsi-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding:16px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
 }
-
-.deskripsi-body { padding: 20px; }
-
-/** Textarea for description input */
+.deskripsi-body { padding:20px; }
 .deskripsi-textarea {
     width:100%;
     min-height:150px;
@@ -299,16 +189,15 @@ function formatNominal($n) {
 /* TABLE RESPONSIVE FIX */
 .table-responsive {
     overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    max-height: 480px;
     overflow-y: auto;
+    max-height: 480px;
+    -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 768px) {
     .table-responsive {
-        max-height: none;
-        overflow-y: visible;
+        max-height: 360px;
+        overflow-y: auto;
     }
 }
 </style>
@@ -471,9 +360,9 @@ function formatNominal($n) {
                                 <th style="color:var(--text-muted);font-size:11px">MAP</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-lokasi">
                             <?php if(empty($lokasi)): ?>
-                            <tr>
+                            <tr data-row="1">
                                 <td colspan="9" class="text-center py-5">
                                     <i class="bi bi-geo-alt" style="font-size:48px;opacity:.2;color:var(--text)"></i>
                                     <p class="mt-2" style="color:var(--text-muted)">Tidak ada data lokasi ditemukan</p>
@@ -481,7 +370,7 @@ function formatNominal($n) {
                             </tr>
                             <?php else: ?>
                                 <?php $no=1; foreach($lokasi as $l): ?>
-                                <tr>
+                                <tr data-row>
                                     <td class="ps-4" style="color:var(--text-muted)"><?= $no++ ?></td>
                                     <td>
                                         <div class="fw-semibold" style="color:var(--text-strong);font-size:13px">
@@ -539,7 +428,8 @@ function formatNominal($n) {
     </div>
 </div>
 
-<!-- MAP MODAL -->
+<!-- PAGINATION FOOTER -->
+<div class="card-footer bg-white border-top d-flex align-items-center flex-wrap gap-2 py-3" id="pag-lokasi"></div>
 <div class="map-modal" id="mapModal">
     <div class="map-backdrop" onclick="tutupMap()"></div>
     <div class="map-card">
@@ -595,25 +485,15 @@ function formatNominal($n) {
 </div>
 
 <script>
-/**
- * ============================================================================
- * MAP MODULE - Handles map interactions and visualizations
- * ============================================================================
- */
-
-/** Map data from PHP backend - contains province info (type, city, count) */
+// Data peta dari PHP
 const petaData = <?= json_encode($peta) ?>;
 
-/** Initialize map and tooltip on DOM ready */
+// Warnai provinsi di SVG
 document.addEventListener('DOMContentLoaded', function() {
     colorizeMap();
     setupTooltip();
 });
 
-/**
- * Colorize SVG provinces based on export/import type
- * Assigns CSS classes to province paths for styling
- */
 function colorizeMap() {
     const svg = document.querySelector('#map-container svg');
     if (!svg) return;
@@ -627,10 +507,6 @@ function colorizeMap() {
     });
 }
 
-/**
- * Setup interactive tooltips for SVG province paths
- * Shows province details on hover with smooth positioning
- */
 function setupTooltip() {
     const svg = document.querySelector('#svg-indonesia');
     const tip = document.getElementById('mapTooltip');
@@ -661,37 +537,23 @@ function setupTooltip() {
     });
 }
 
-/**
- * Open map modal with full-screen visualization
- * Recolorizes map on open with slight delay for rendering
- */
 function bukaMap() {
     document.getElementById('mapModal').classList.add('active');
     document.body.style.overflow = 'hidden';
     setTimeout(colorizeMap, 50);
 }
 
-/** Close map modal and restore body scroll */
 function tutupMap() {
     document.getElementById('mapModal').classList.remove('active');
     document.body.style.overflow = '';
 }
 
-/**
- * Open map modal with specific province highlighted
- * Dims other provinces and adds emphasis to selected one
- *
- * @param {string} svgId - Province SVG element ID
- * @param {string} kota - City name (for display)
- * @param {string} tipe - Transaction type (ekspor/impor)
- */
 function bukaMapProvinsi(svgId, kota, tipe) {
     bukaMap();
     setTimeout(function() {
         const svg = document.querySelector('#svg-indonesia');
         if (!svg) return;
-
-        // Highlight selected province
+        // Highlight provinsi yang dipilih
         svg.querySelectorAll('path').forEach(p => p.style.opacity = '0.3');
         const target = svg.querySelector(`[id="${svgId}"]`);
         if (target) {
@@ -699,8 +561,7 @@ function bukaMapProvinsi(svgId, kota, tipe) {
             target.style.strokeWidth = '2';
             target.style.stroke = '#fff';
         }
-
-        // Auto-reset highlighting after 3 seconds
+        // Reset setelah 3 detik
         setTimeout(() => {
             svg.querySelectorAll('path').forEach(p => {
                 p.style.opacity = '';
@@ -711,20 +572,12 @@ function bukaMapProvinsi(svgId, kota, tipe) {
     }, 100);
 }
 
-/** Close map modal with Escape key */
+// Tutup dengan Escape
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') tutupMap();
 });
 
-/**
- * ============================================================================
- * DESCRIPTION MODULE - Handles page-level documentation editing
- * ============================================================================
- */
-
-/**
- * Open description modal and load saved content from localStorage
- */
+// ========== DESKRIPSI FUNCTIONS ==========
 function deskripsi() {
     const modal = document.getElementById('deskripsiModal');
     const textarea = document.getElementById('deskripsiText');
@@ -737,17 +590,12 @@ function deskripsi() {
     textarea.focus();
 }
 
-/** Close description modal and restore body scroll */
 function tutupDeskripsi() {
     const modal = document.getElementById('deskripsiModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
 }
 
-/**
- * Save description to localStorage and display notification
- * Clears localStorage if textarea is empty
- */
 function simpanDeskripsi() {
     const textarea = document.getElementById('deskripsiText');
     const deskripsi = textarea.value.trim();
@@ -764,13 +612,6 @@ function simpanDeskripsi() {
     tutupDeskripsi();
 }
 
-/**
- * Display temporary notification toast at top-right corner
- * Auto-dismisses after 2.5 seconds with slide animation
- *
- * @param {string} message - Notification message text
- * @param {string} type - Notification type: 'success', 'error', or 'info'
- */
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -794,7 +635,7 @@ function showNotification(message, type = 'success') {
     }, 2500);
 }
 
-/** Inject CSS animations for notification toast */
+// CSS untuk animasi
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
@@ -808,13 +649,79 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-/** Close description modal with Escape key */
+// Tutup modal deskripsi dengan Escape
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         const modal = document.getElementById('deskripsiModal');
         if (modal.classList.contains('active')) tutupDeskripsi();
     }
 });
+</script>
+
+<script>
+    (function() {
+        /**
+         * Client-side pagination for "Daftar Lokasi".
+         *
+         * Expected HTML structure:
+         * - `tbodyId` is a <tbody> that contains <tr> rows.
+         * - Each paginated row must include `data-row` attribute.
+         * - `pagId` is a container element where pagination buttons will be injected.
+         */
+        function paginate(tbodyId, pagId, perPage) {
+            var tbody = document.getElementById(tbodyId);
+            if (!tbody) return;
+            var rows = Array.from(tbody.querySelectorAll('tr[data-row]'));
+            var total = rows.length;
+            var totalPages = Math.ceil(total / perPage);
+            var cur = 1;
+
+            function show(page) {
+                cur = Math.max(1, Math.min(page, totalPages));
+                rows.forEach(function(r, i) {
+                    r.style.display = (i >= (cur-1)*perPage && i < cur*perPage) ? '' : 'none';
+                });
+                render();
+            }
+
+            function render() {
+                var el = document.getElementById(pagId);
+                if (!el) return;
+                if (totalPages <= 1) { el.innerHTML = ''; return; }
+                var from = (cur-1)*perPage + 1;
+                var to = Math.min(cur*perPage, total);
+                var btns = '';
+                btns += '<li class="page-item' + (cur===1?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur-1) + '">&laquo;</a></li>';
+                for (var p = 1; p <= totalPages; p++) {
+                    if (p === 1 || p === totalPages || (p >= cur-1 && p <= cur+1)) {
+                        btns += '<li class="page-item' + (p===cur?' active':'') + '"><a class="page-link" href="#" data-p="' + p + '">' + p + '</a></li>';
+                    } else if (p === cur-2 || p === cur+2) {
+                        btns += '<li class="page-item disabled"><span class="page-link">…</span></li>';
+                    }
+                }
+                btns += '<li class="page-item' + (cur===totalPages?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur+1) + '">&raquo;</a></li>';
+                el.innerHTML = '<nav><ul class="pagination pagination-sm mb-0">' + btns + '</ul></nav>' +
+                    '<small class="text-muted ms-3">Menampilkan ' + from + '–' + to + ' dari ' + total + '</small>';
+                el.querySelectorAll('a.page-link').forEach(function(a) {
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var pg = parseInt(this.getAttribute('data-p'));
+                        if (!isNaN(pg)) show(pg);
+                    });
+                });
+            }
+
+            show(1);
+        }
+
+        window._paginate_lokasi = paginate;
+    })();
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // 5-8 baris per halaman: mobile 5, desktop 8
+        var perPage = window.innerWidth < 768 ? 5 : 8;
+        window._paginate_lokasi("tbody-lokasi", "pag-lokasi", perPage);
+    });
 </script>
 
 <?= view('layout/footer') ?>

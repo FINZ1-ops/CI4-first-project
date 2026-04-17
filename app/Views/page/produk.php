@@ -1,7 +1,6 @@
 <?= view('layout/header') ?>
 <?= view('layout/sidebar') ?>
 <?= view('layout/topbar') ?>
-
 <div class="pc-container">
     <div class="pc-content">
 
@@ -101,7 +100,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-produk">
                             <?php if (empty($product)): ?>
                                 <tr>
                                     <td colspan="4" class="text-center py-5">
@@ -126,7 +125,7 @@
                                 <?php foreach ($product as $p):
                                     $cat = $categoryMap[$p['category']] ?? ['icon' => 'bi-box', 'color' => '#6c757d'];
                                 ?>
-                                <tr>
+                                <tr data-row="1">
                                     <td class="ps-4">
                                         <div class="d-flex align-items-center gap-2">
                                             <div class="badge rounded-circle me-2" style="background-color: <?= $cat['color'] ?>; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
@@ -156,9 +155,63 @@
                     </table>
                 </div>
             </div>
+            <div class="card-footer bg-white border-top-0 d-flex align-items-center flex-wrap gap-2 py-3" id="pag-produk"></div>
         </div>
 
     </div>
 </div>
+
+<script>
+(function() {
+    function paginate(tbodyId, pagId, perPage) {
+        var tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        var rows = Array.from(tbody.querySelectorAll('tr[data-row]'));
+        var total = rows.length;
+        var totalPages = Math.ceil(total / perPage);
+        var cur = 1;
+
+        function show(page) {
+            cur = Math.max(1, Math.min(page, totalPages));
+            rows.forEach(function(r, i) {
+                r.style.display = (i >= (cur-1)*perPage && i < cur*perPage) ? '' : 'none';
+            });
+            render();
+        }
+
+        function render() {
+            var el = document.getElementById(pagId);
+            if (!el) return;
+            if (totalPages <= 1) { el.innerHTML = ''; return; }
+            var from = (cur-1)*perPage + 1;
+            var to = Math.min(cur*perPage, total);
+            var btns = '';
+            btns += '<li class="page-item' + (cur===1?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur-1) + '">&laquo;</a></li>';
+            for (var p = 1; p <= totalPages; p++) {
+                if (p === 1 || p === totalPages || (p >= cur-1 && p <= cur+1)) {
+                    btns += '<li class="page-item' + (p===cur?' active':'') + '"><a class="page-link" href="#" data-p="' + p + '">' + p + '</a></li>';
+                } else if (p === cur-2 || p === cur+2) {
+                    btns += '<li class="page-item disabled"><span class="page-link">…</span></li>';
+                }
+            }
+            btns += '<li class="page-item' + (cur===totalPages?' disabled':'') + '"><a class="page-link" href="#" data-p="' + (cur+1) + '">&raquo;</a></li>';
+            el.innerHTML = '<nav><ul class="pagination pagination-sm mb-0">' + btns + '</ul></nav>' +
+                '<small class="text-muted ms-3">Menampilkan ' + from + '–' + to + ' dari ' + total + '</small>';
+            el.querySelectorAll('a.page-link').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var pg = parseInt(this.getAttribute('data-p'));
+                    if (!isNaN(pg)) show(pg);
+                });
+            });
+        }
+
+        show(1);
+    }
+    window._paginate = paginate;
+})();
+</script>
+
+<script>document.addEventListener("DOMContentLoaded",function(){ window._paginate("tbody-produk","pag-produk",10); });</script>
 
 <?= view('layout/footer') ?>
